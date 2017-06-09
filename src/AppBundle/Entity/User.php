@@ -1,13 +1,12 @@
 <?php
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken")
  * @ORM\Table(name="users")
  */
 class User implements UserInterface
@@ -20,21 +19,21 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
-
-    /**
-     * @Assert\NotBlank()
-     */
-    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="integer")
@@ -59,16 +58,6 @@ class User implements UserInterface
     public function getUsername()
     {
         return $this->email;
-    }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
     }
 
     public function getPassword()
@@ -151,5 +140,15 @@ class User implements UserInterface
     public function setNotification($notification)
     {
         $this->notification = $notification;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 }
