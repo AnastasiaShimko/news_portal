@@ -22,8 +22,8 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
             ))
             ->add('notification', CheckboxType::class, array(
-                'label'    => 'Show this entry publicly?',
                 'required' => false,
+                'label'    => 'Do you want to receive fresh news every week?',
             ));
 
         ;

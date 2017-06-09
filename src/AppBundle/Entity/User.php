@@ -152,4 +152,14 @@ class User implements UserInterface
     {
         $this->notification = $notification;
     }
+
+    /**
+     * Get notification
+     *
+     * @return boolean
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
 }
