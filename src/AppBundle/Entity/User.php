@@ -44,11 +44,6 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $notification;
 
     public function getEmail()
@@ -140,22 +135,6 @@ class User implements UserInterface
     public function getRole()
     {
         return $this->role;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param boolean $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
     }
 
     /**
