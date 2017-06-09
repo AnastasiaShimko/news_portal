@@ -22,11 +22,9 @@ class LoginController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $repository = $em->getRepository('AppBundle:User');
-            // query for a single product matching the given name and price
             $user = $repository->findOneBy(
                 array('email' => $user->getEmail(), 'password' => $password)
             );
-
             if ($user){
                 return $this->render(
                     'user/login.html.twig',
@@ -35,7 +33,6 @@ class LoginController extends Controller
             }
             return $this->redirectToRoute('user_registration');
         }
-
         return $this->render(
             'user/login.html.twig',
             array('form' => $form->createView())

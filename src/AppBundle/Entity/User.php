@@ -2,12 +2,9 @@
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 /**
  * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken")
  * @ORM\Table(name="users")
  */
 class User implements UserInterface
@@ -18,74 +15,60 @@ class User implements UserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
-
     /**
      * @Assert\NotBlank()
      */
     private $plainPassword;
-
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
-
     /**
      * @ORM\Column(type="integer")
      */
     private $role;
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $notification;
-
     public function getEmail()
     {
         return $this->email;
     }
-
     public function setEmail($email)
     {
         $this->email = $email;
     }
-
     public function getUsername()
     {
         return $this->email;
     }
-
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
-
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
     }
-
     public function getPassword()
     {
         return $this->password;
     }
-
     public function setPassword($password)
     {
         $this->password = $password;
     }
-
     public function getSalt()
     {
         return null;
     }
-
     /**
      * @return (Role|string)[] The user roles
      */
@@ -93,7 +76,6 @@ class User implements UserInterface
     {
         return array("0",);
     }
-
     /**
      * Removes sensitive data from the user.
      *
@@ -103,7 +85,6 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
-
     /**
      * Get id
      *
@@ -113,7 +94,6 @@ class User implements UserInterface
     {
         return $this->id;
     }
-
     /**
      * Set role
      *
@@ -126,7 +106,6 @@ class User implements UserInterface
         $this->role = $role;
         return $this;
     }
-
     /**
      * Get role
      *
@@ -136,7 +115,6 @@ class User implements UserInterface
     {
         return $this->role;
     }
-
     /**
      * @return boolean
      */
@@ -144,22 +122,11 @@ class User implements UserInterface
     {
         return $this->notification;
     }
-
     /**
      * @param boolean $notification
      */
     public function setNotification($notification)
     {
         $this->notification = $notification;
-    }
-
-    /**
-     * Get notification
-     *
-     * @return boolean
-     */
-    public function getNotification()
-    {
-        return $this->notification;
     }
 }
