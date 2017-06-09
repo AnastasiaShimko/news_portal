@@ -1,4 +1,1 @@
-.checkout
-=========
-
-A Symfony project created on June 5, 2017, 5:25 pm.
+Course project on PHP for Itransition. Topic: "News portal". Developed by Anastasia Shimko and Ksenia Maslak
