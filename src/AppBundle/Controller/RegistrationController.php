@@ -29,7 +29,6 @@ class RegistrationController extends Controller
             $user->setPassword($password);
 
             $user->setRole(0);
-            $user->setActive(false);
             $user->setNotification(false);
             // 4) save the User!
             $em->persist($user);
