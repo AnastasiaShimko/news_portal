@@ -15,6 +15,7 @@
             margin: auto;
             background-color: #ffa64d;
             padding: 6% 2% 6% 2%;
+            font-size: 1.2em;
         }
         form div
         {
@@ -29,6 +30,7 @@
         form input
         {
             margin: 1%;
+            height: 1.2em;
         }
         h1
         {
@@ -37,9 +39,19 @@
         button
         {
             margin-left: 40%;
-            margin-top: 5%;
             padding: 1%;
         }
+        a
+        {
+            text-decoration: none;
+            color: black;
+        }
+        form p
+        {
+            display: inline-block;
+            padding-right: 2%;
+        }
+
         @media screen and (max-width: 890px)
         {
             form div
@@ -52,7 +64,7 @@
     </style>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
-<body>
+<a>
 {% block body %}
     <h1>Registration</h1>
     {{ form_start(form) }}
@@ -62,9 +74,11 @@
     <div class="notify">
         {{ form_row(form.notification) }}
     </div>
-    <button type="submit">Register!</button>
+    <button type="submit">Register</button>
+    <br>
+    <p>Already registered?</p>
+    <a href="/login" id="tologinform">Login...</a>
     {{ form_end(form) }}
 {% endblock %}
-{% block javascripts %}{% endblock %}
 </body>
 </html>

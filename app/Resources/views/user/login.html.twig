@@ -1,3 +1,78 @@
-{{ form_start(form) }}
-<button type="submit">Login!</button>
-{{ form_end(form) }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Authorisation{% endblock %}</title>
+    <style>
+        {% block stylesheets %}
+        body
+        {
+            background-color: #ffffb3;
+        }
+        form
+        {
+            width: 40%;
+            margin: auto;
+            background-color: #ffa64d;
+            padding: 6% 2% 6% 2%;
+        }
+        form div
+        {
+            clear:both;
+            text-align:right;
+        }
+        form label
+        {
+            float: left;
+            margin: 2%;
+        }
+        form input
+        {
+            margin: 1%;
+        }
+        h1
+        {
+            text-align: center;
+        }
+        button
+        {
+            margin-left: 20%;
+            margin-top: 5%;
+            padding: 1%;
+        }
+        a
+        {
+            text-decoration: none;
+            color: black;
+        }
+        form p
+        {
+            display: inline-block;
+            padding-right: 2%;
+        }
+        @media screen and (max-width: 890px)
+        {
+            form div
+            {
+                clear:both;
+                float: right;
+            }
+        }
+        {% endblock %}
+    </style>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    <h1>Authorisation</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword) }}
+    <button type="submit">Login!</button>
+    <br>
+    <p>Haven't registered yet?</p>
+    <a href="/register">Go to registration page...</a>
+    {{ form_end(form) }}
+{% endblock %}
+</body>
+</html>
