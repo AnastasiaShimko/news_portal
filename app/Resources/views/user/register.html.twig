@@ -3,53 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Registration{% endblock %}</title>
-    <style>
-        {% block stylesheets %}
-        body
-        {
-            background-color: #ffffb3;
-        }
-        form
-        {
-            width: 40%;
-            margin: auto;
-            background-color: #ffa64d;
-            padding: 6% 2% 6% 2%;
-        }
-        form div
-        {
-            clear:both;
-            text-align:right;
-        }
-        form label
-        {
-            float: left;
-            margin: 2%;
-        }
-        form input
-        {
-            margin: 1%;
-        }
-        h1
-        {
-            text-align: center;
-        }
-        button
-        {
-            margin-left: 40%;
-            margin-top: 5%;
-            padding: 1%;
-        }
-        @media screen and (max-width: 890px)
-        {
-            form div
-            {
-                clear:both;
-                float: right;
-            }
-        }
-        {% endblock %}
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
@@ -62,9 +16,11 @@
     <div class="notify">
         {{ form_row(form.notification) }}
     </div>
-    <button type="submit">Register!</button>
+    <button type="submit">Register</button>
+    <br>
+    <p>Already registered?</p>
+    <a href="/login" id="tologinform">Login...</a>
     {{ form_end(form) }}
 {% endblock %}
-{% block javascripts %}{% endblock %}
 </body>
 </html>

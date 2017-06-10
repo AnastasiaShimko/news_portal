@@ -23,7 +23,7 @@ class RegistrationForm extends AbstractType
             ))
             ->add('notification', CheckboxType::class, array(
                 'required' => false,
-                'label'    => 'Do you want to receive fresh news every week?',
+                'label'    => 'Do you want to receive top news every week?',
             ));
     }
 

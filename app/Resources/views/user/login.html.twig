@@ -1,3 +1,23 @@
-{{ form_start(form) }}
-<button type="submit">Login!</button>
-{{ form_end(form) }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Authorisation{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    <h1>Authorisation</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword) }}
+    <br>
+    <button type="submit">Login!</button>
+    <br>
+    <p>Haven't registered yet?</p>
+    <a href="/register">Go to registration page...</a>
+    {{ form_end(form) }}
+{% endblock %}
+</body>
+</html>
