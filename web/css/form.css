@@ -1,54 +1,75 @@
-body
-{
+body {
     background-image: url("../newspaper_background.jpg");
+    font-family: Arial;
 }
-form
-{
+form {
     width: 40%;
     margin: auto;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.7);
     padding: 6% 2% 6% 2%;
 }
-form div
-{
-    clear:both;
-    text-align:right;
+form div {
+    clear: both;
+    text-align: right;
 }
-form label
-{
+form label {
     float: left;
     margin: 2%;
+    font-size:1.2em;
 }
-form input
-{
+form input {
     margin: 1%;
     height: 1.2em;
 }
-h1
-{
+h1 {
     text-align: center;
+    margin-top: 4%;
 }
-button
-{
-    margin-left: 40%;
-    padding: 1%;
+button {
+    margin-left: 43%;
+    -webkit-border-radius: 11px;
+    -moz-border-radius: 11px;
+    border-radius: 11px;
+    font-family: Arial;
+    color: #000000;
+    font-size: 1em;
+    background: #e2c791;
+    padding: 1% 2% 1% 2%;
+    text-decoration: none;
+    transition: 1s;
+    cursor: pointer;
 }
-a
-{
+button:hover {
+    background: #f2e0a9;
+    text-decoration: none;
+}
+a {
     text-decoration: none;
     color: black;
 }
-form p
-{
+form p {
     display: inline-block;
     padding-right: 2%;
 }
 
-@media screen and (max-width: 890px)
-{
-    form div
-    {
-        clear:both;
+.notify input[type=checkbox]{
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+.notify input[type=checkbox]:checked{
+    background: #66dd66;
+    border: #08441d 2px;
+}
+
+@media screen and (max-width: 890px) {
+    form div {
+        clear: both;
         float: right;
     }
 }
