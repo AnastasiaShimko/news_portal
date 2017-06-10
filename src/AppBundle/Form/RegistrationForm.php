@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\User;
+use AppBundle\Entity\RegisteredUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +16,7 @@ class RegistrationForm extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
@@ -25,14 +25,12 @@ class RegistrationForm extends AbstractType
                 'required' => false,
                 'label'    => 'Do you want to receive fresh news every week?',
             ));
-
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => User::class,
+            'data_class' => RegisteredUser::class,
         ));
     }
 }

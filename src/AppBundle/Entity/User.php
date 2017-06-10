@@ -1,90 +1,105 @@
 <?php
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
- * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\Entity
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
+
+    public function __construct()
+    {
+        $this->role = 0;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
+
     /**
-     * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
-    /**
-     * @Assert\NotBlank()
-     */
-    private $plainPassword;
+
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=60, unique=true)
      */
-    private $role;
+    private $email;
+
     /**
      * @ORM\Column(type="boolean")
      */
     private $notification;
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $role;
+
+
     public function getUsername()
     {
         return $this->email;
     }
-    public function getPlainPassword()
+
+    public function getSalt()
     {
-        return $this->plainPassword;
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
     }
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
-    }
+
     public function getPassword()
     {
         return $this->password;
     }
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-    public function getSalt()
-    {
-        return null;
-    }
-    /**
-     * @return (Role|string)[] The user roles
-     */
+
     public function getRoles()
     {
-        return array("0",);
+        return array('ROLE_USER');
     }
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
+
     public function eraseCredentials()
     {
     }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            $this->notification,
+            $this->role,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            $this->notification,
+            $this->role,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
     /**
      * Get id
      *
@@ -94,39 +109,84 @@ class User implements UserInterface
     {
         return $this->id;
     }
+
     /**
-     * Set role
+     * Set password
      *
-     * @param int $role
+     * @param string $password
      *
      * @return User
      */
-    public function setRole($role)
+    public function setPassword($password)
     {
-        $this->role = $role;
+        $this->password = $password;
+
         return $this;
     }
+
     /**
-     * Get role
+     * Set email
      *
-     * @return integer
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return mixed
      */
     public function getRole()
     {
         return $this->role;
     }
+
     /**
-     * @return boolean
+     * @param mixed $role
      */
-    public function isNotification()
+    public function setRole($role)
     {
-        return $this->notification;
+        $this->role = $role;
     }
+
+
+
     /**
+     * Set notification
+     *
      * @param boolean $notification
+     *
+     * @return User
      */
     public function setNotification($notification)
     {
         $this->notification = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Get notification
+     *
+     * @return boolean
+     */
+    public function getNotification()
+    {
+        return $this->notification;
     }
 }
