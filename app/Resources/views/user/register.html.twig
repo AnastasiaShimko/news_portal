@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Registration{% endblock %}</title>
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+{% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-</head>
-<body>
+{% endblock %}
 {% block body %}
     <h1>Registration</h1>
     {{ form_start(form) }}
@@ -22,5 +20,3 @@
     <a href="/login" id="tologinform">Login...</a>
     {{ form_end(form) }}
 {% endblock %}
-</body>
-</html>
