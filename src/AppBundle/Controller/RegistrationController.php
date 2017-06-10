@@ -42,7 +42,7 @@ class RegistrationController extends Controller
     private function sendMail(\Swift_Mailer $mailer, User $user){
         $message = new \Swift_Message('Confirm Email');
         $message->setFrom('shimkoanastasia@gmail.com');
-        $message->setTo('fea.ortenore@gmail.com');
+        $message->setTo('fea.ortenore@gmail.com'); #$user->getEmail()
         $message->setBody(
                 $this->renderView(
                 'user/registration.html.twig',

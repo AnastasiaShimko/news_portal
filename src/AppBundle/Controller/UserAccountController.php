@@ -24,6 +24,7 @@ class UserAccountController extends Controller
         return $this->redirectToRoute('registration');
     }
 
+
     private function getUserByConfirmId($id, EntityManager $em){
         $user = null;
         foreach ($this->getAllNotValidUsers($em) as $value){
