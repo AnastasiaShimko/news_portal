@@ -1,0 +1,54 @@
+body
+{
+    background-image: url("../newspaper_background.jpg");
+}
+form
+{
+    width: 40%;
+    margin: auto;
+    background-color: rgba(255,255,255,0.5);
+    padding: 6% 2% 6% 2%;
+}
+form div
+{
+    clear:both;
+    text-align:right;
+}
+form label
+{
+    float: left;
+    margin: 2%;
+}
+form input
+{
+    margin: 1%;
+    height: 1.2em;
+}
+h1
+{
+    text-align: center;
+}
+button
+{
+    margin-left: 40%;
+    padding: 1%;
+}
+a
+{
+    text-decoration: none;
+    color: black;
+}
+form p
+{
+    display: inline-block;
+    padding-right: 2%;
+}
+
+@media screen and (max-width: 890px)
+{
+    form div
+    {
+        clear:both;
+        float: right;
+    }
+}
