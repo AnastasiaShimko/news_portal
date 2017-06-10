@@ -14,21 +14,45 @@ use Doctrine\ORM\EntityManagerInterface;
 class RegistrationController extends Controller
 {
     private $userInForm;
+    private $user;
+
 
     /**
      * @Route("/register", name="registration")
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder,
+                                   EntityManagerInterface $em, \Swift_Mailer $mailer)
     {
+
         $form = $this->createRegistrationForm($request);
-        if ($this->tryCreateUser($form, $em, $passwordEncoder)) {
+        if ($this->tryCreateUser($form, $em, $passwordEncoder, $mailer)) {
             return $this->redirectToRoute('login');
+            /*return $this->render(
+                'user/registration.html.twig',
+
+                array('id' => md5($this->user->getId().$this->user->getPassword().$this->user->getEmail()))
+            );*/
         }
         return $this->render(
             'user/register.html.twig',
             array('form' => $form->createView())
         );
     }
+
+    private function sendMail(\Swift_Mailer $mailer, User $user){
+        $message = new \Swift_Message('Confirm Email');
+        $message->setFrom('shimkoanastasia@gmail.com');
+        $message->setTo('fea.ortenore@gmail.com');
+        $message->setBody(
+                $this->renderView(
+                'user/registration.html.twig',
+                    array('id' => md5($user->getId().$user->getPassword().$user->getEmail()))
+                ),
+                'text/html'
+            );
+        $mailer->send($message);
+    }
+
 
     private function createRegistrationForm(Request $request){
         if (!$this->userInForm){
@@ -39,9 +63,10 @@ class RegistrationController extends Controller
         return $form;
     }
 
-    private function tryCreateUser(Form $form, EntityManagerInterface $em,  UserPasswordEncoderInterface $passwordEncoder){
+    private function tryCreateUser(Form $form, EntityManagerInterface $em,  UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer){
         if ($form->isSubmitted() && $form->isValid() && !$this->userExists($em)) {
-            $this->createUser($em, $passwordEncoder);
+            $user = $this->createUser($em, $passwordEncoder);
+            $this->sendMail($mailer, $user);
             return true;
         }
         return false;
@@ -60,6 +85,8 @@ class RegistrationController extends Controller
         $this->mergeUser($user, $passwordEncoder);
         $em->persist($user);
         $em->flush();
+        $this->user = $user;
+        return $user;
     }
 
 
