@@ -3,65 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Registration{% endblock %}</title>
-    <style>
-        {% block stylesheets %}
-        body
-        {
-            background-color: #ffffb3;
-        }
-        form
-        {
-            width: 40%;
-            margin: auto;
-            background-color: #ffa64d;
-            padding: 6% 2% 6% 2%;
-            font-size: 1.2em;
-        }
-        form div
-        {
-            clear:both;
-            text-align:right;
-        }
-        form label
-        {
-            float: left;
-            margin: 2%;
-        }
-        form input
-        {
-            margin: 1%;
-            height: 1.2em;
-        }
-        h1
-        {
-            text-align: center;
-        }
-        button
-        {
-            margin-left: 40%;
-            padding: 1%;
-        }
-        a
-        {
-            text-decoration: none;
-            color: black;
-        }
-        form p
-        {
-            display: inline-block;
-            padding-right: 2%;
-        }
-
-        @media screen and (max-width: 890px)
-        {
-            form div
-            {
-                clear:both;
-                float: right;
-            }
-        }
-        {% endblock %}
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <a>
