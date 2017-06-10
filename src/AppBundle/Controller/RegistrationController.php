@@ -52,7 +52,7 @@ class RegistrationController extends Controller
         $user= $repository->findOneBy(
             array('email' => $this->userInForm->getEmail())
         );
-        return $user;
+        return isset($user);
     }
 
     private function createUser(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder){

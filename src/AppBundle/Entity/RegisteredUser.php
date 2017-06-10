@@ -19,50 +19,32 @@ class RegisteredUser
 
     private $notification;
 
-    /**
-     * @return mixed
-     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
     public function getNotification()
     {
         return $this->notification;
     }
 
-    /**
-     * @param mixed $notification
-     */
-    public function setNotification($notification)
+    public function setNotification(bool $notification)
     {
         $this->notification = $notification;
     }

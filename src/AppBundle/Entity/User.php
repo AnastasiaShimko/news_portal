@@ -14,8 +14,6 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->role = 0;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
     }
 
     /**
@@ -81,7 +79,6 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->notification,
             $this->role,
-            // see section on salt below
             // $this->salt,
         ));
     }
@@ -95,96 +92,51 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->notification,
             $this->role,
-            // see section on salt below
             // $this->salt
             ) = unserialize($serialized);
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * @return mixed
-     */
     public function getRole()
     {
         return $this->role;
     }
 
-    /**
-     * @param mixed $role
-     */
-    public function setRole($role)
+    public function setRole(int $role)
     {
         $this->role = $role;
     }
 
-
-
-    /**
-     * Set notification
-     *
-     * @param boolean $notification
-     *
-     * @return User
-     */
-    public function setNotification($notification)
+    public function setNotification(bool $notification)
     {
         $this->notification = $notification;
 
         return $this;
     }
 
-    /**
-     * Get notification
-     *
-     * @return boolean
-     */
     public function getNotification()
     {
         return $this->notification;
