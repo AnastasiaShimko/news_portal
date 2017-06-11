@@ -1,7 +1,14 @@
-<h3>You did it! You registered!</h3>
+{% extends 'base.html.twig' %}
 
-Hi! You're successfully registered.
+{% block body %}
+    <h3>You did it! You registered!</h3>
+    <p>Hi! You're successfully registered.<br>
+        To make verification of your email, go to:</p> <a href="{{ url('validation', {'id': id})}}">Verification</a>.
+    <p>Thanks!</p>
+{% endblock %}
 
-To make verification of your email, go to: <a href="{{ url('validation', {'id': id})}}">Verification</a>.
+{% block stylesheets %}
+    <style>
 
-Thanks!
+    </style>
+{% endblock %}
