@@ -31,7 +31,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                                 # ...
+
             logout:
                 path:   /logout
                 target: /
@@ -39,10 +39,9 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/registr, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/validate/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/validation/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/password_change, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/accounts, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext

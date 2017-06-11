@@ -142,4 +142,10 @@ class User implements UserInterface, \Serializable
     {
         return $this->notification;
     }
+
+
+    public static function isValidUser(User $user){
+        return $user && $user->getRole()!= 'ROLE_NOT_CONFIRMED'
+            && $user->getRole()!='ROLE_DELETED';
+    }
 }

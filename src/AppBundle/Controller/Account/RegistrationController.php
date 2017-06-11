@@ -3,7 +3,8 @@ namespace AppBundle\Controller\Account;
 
 use AppBundle\Entity\RegisteredUser;
 use AppBundle\Form\RegistrationForm;
-use AppBundle\Entity\User;
+use AppBundle\Providers\UserProvider;
+use AppBundle\Services\Mailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -14,8 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class RegistrationController extends Controller
 {
     private $userInForm;
-    private $user;
-
 
     /**
      * @Route("/register", name="registration")
@@ -33,21 +32,6 @@ class RegistrationController extends Controller
         );
     }
 
-    private function sendMail(\Swift_Mailer $mailer, User $user){
-        $message = new \Swift_Message('Confirm Email');
-        $message->setFrom('shimkoanastasia@gmail.com');
-        $message->setTo('fea.ortenore@gmail.com'); #$user->getEmail()
-        $message->setBody(
-                $this->renderView(
-                'user/registration.html.twig',
-                    array('id' => md5($user->getId().$user->getPassword().$user->getEmail()))
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
-    }
-
-
     private function createRegistrationForm(Request $request){
         if (!$this->userInForm){
             $this->userInForm = new RegisteredUser();
@@ -58,36 +42,15 @@ class RegistrationController extends Controller
     }
 
     private function tryCreateUser(Form $form, EntityManagerInterface $em,  UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer){
-        if ($form->isSubmitted() && $form->isValid() && !$this->userExists($em)) {
-            $user = $this->createUser($em, $passwordEncoder);
-            $this->sendMail($mailer, $user);
+        $userProvider = new UserProvider();
+        if ($form->isSubmitted() && $form->isValid()
+            && !$userProvider->getUser($em, $this->userInForm->getEmail())) {
+            $user = $userProvider->createUser($this->userInForm, $em, $passwordEncoder);
+            $twig = $this->get('twig');
+            (new Mailer())->sendRegistrationMail($mailer, $user, $twig);
             return true;
         }
         return false;
     }
 
-    private function userExists(EntityManagerInterface $em){
-        $repository = $em->getRepository('AppBundle:User');
-        $user= $repository->findOneBy(
-            array('email' => $this->userInForm->getEmail())
-        );
-        return isset($user);
-    }
-
-    private function createUser(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder){
-        $user = new User();
-        $this->mergeUser($user, $passwordEncoder);
-        $em->persist($user);
-        $em->flush();
-        $this->user = $user;
-        return $user;
-    }
-
-
-    private function mergeUser(User $user, UserPasswordEncoderInterface $passwordEncoder){
-        $password = $passwordEncoder->encodePassword($user, $this->userInForm->getPassword());
-        $user->setPassword($password);
-        $user->setEmail($this->userInForm->getEmail());
-        $user->setNotification($this->userInForm->getNotification());
-    }
 }

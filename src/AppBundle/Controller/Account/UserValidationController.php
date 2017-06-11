@@ -4,7 +4,9 @@ namespace AppBundle\Controller\Account;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Providers\UserProvider;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,11 +16,11 @@ class UserValidationController extends Controller
     /**
      * @Route("/validate/{id}", name="validation")
      */
-    public function validateAction($id, EntityManager $em)
+    public function validateAction($id, EntityManagerInterface $em)
     {
         $user = $this->getUserByConfirmId($id, $em);
         if ($user) {
-            $this->changeRole($user, $em);
+            (new UserProvider())->changeRole($user, 'ROLE_USER', $em);
             return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('registration');
@@ -27,7 +29,7 @@ class UserValidationController extends Controller
 
     private function getUserByConfirmId($id, EntityManager $em){
         $user = null;
-        foreach ($this->getAllNotValidUsers($em) as $value){
+        foreach ((new UserProvider())->getAllUsersByRole($em, 'ROLE_NOT_CONFIRMED') as $value){
             if($this->checkConfirmId($value, $id)){
                 $user = $value;
             }
@@ -39,13 +41,4 @@ class UserValidationController extends Controller
         return md5($user->getId().$user->getPassword().$user->getEmail())==$id;
     }
 
-    private function getAllNotValidUsers(EntityManager $em){
-        $repository = $em->getRepository('AppBundle:User');
-        return $repository->findBy(array('role' => 0));
-    }
-
-    private function changeRole(User $user, EntityManager $em){
-        $user->setRole('ROLE_USER');
-        $em->flush();
-    }
 }
