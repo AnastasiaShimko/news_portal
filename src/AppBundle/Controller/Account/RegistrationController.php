@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Account;
 
 use AppBundle\Entity\RegisteredUser;
 use AppBundle\Form\RegistrationForm;
@@ -23,15 +23,9 @@ class RegistrationController extends Controller
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder,
                                    EntityManagerInterface $em, \Swift_Mailer $mailer)
     {
-
         $form = $this->createRegistrationForm($request);
         if ($this->tryCreateUser($form, $em, $passwordEncoder, $mailer)) {
             return $this->redirectToRoute('login');
-            /*return $this->render(
-                'user/registration.html.twig',
-
-                array('id' => md5($this->user->getId().$this->user->getPassword().$this->user->getEmail()))
-            );*/
         }
         return $this->render(
             'user/register.html.twig',

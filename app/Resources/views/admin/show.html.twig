@@ -1,0 +1,11 @@
+{% for user in users %}
+    {{ user.id }}<br>
+    {{ user.email }}<br>
+    {{ user.role }}<br>
+    {{ user.notification }}<br>
+{% endfor %}
+
+{{ form_start(form) }}
+{{ form_row(form.roles) }}
+<button type="submit">Change</button>
+{{ form_end(form) }}

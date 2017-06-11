@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Account;
 
 
 use AppBundle\Entity\User;
@@ -9,12 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
-class UserAccountController extends Controller
+class UserValidationController extends Controller
 {
     /**
      * @Route("/validate/{id}", name="validation")
      */
-    public function registerAction($id, EntityManager $em)
+    public function validateAction($id, EntityManager $em)
     {
         $user = $this->getUserByConfirmId($id, $em);
         if ($user) {
@@ -45,7 +45,7 @@ class UserAccountController extends Controller
     }
 
     private function changeRole(User $user, EntityManager $em){
-        $user->setRole(1);
+        $user->setRole('ROLE_USER');
         $em->flush();
     }
 }

@@ -1,6 +1,6 @@
 <?php
-namespace AppBundle\Controller;
 
+namespace AppBundle\Controller\Account;
 
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,7 +32,8 @@ class UserChangePasswordController extends Controller
         if ($email){
             $repository = $em->getRepository('AppBundle:User');
             $user =  $repository->findOneBy(array('email' => $email));
-            if ($user && $user->getRole()!=0){
+            if ($user && $user->getRole()!= 'ROLE_NOT_CONFIRMED'
+                && $user->getRole()!='ROLE_DELETED'){
                 return true;
             }
         }

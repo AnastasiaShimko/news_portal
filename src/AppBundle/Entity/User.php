@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
+use AppBundle\Constants\RoleConstants;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -63,7 +64,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->getRole());
     }
 
     public function eraseCredentials()
@@ -122,12 +123,12 @@ class User implements UserInterface, \Serializable
 
     public function getRole()
     {
-        return $this->role;
+        return RoleConstants::$ROLES_FROM_NUMBER[$this->role];
     }
 
-    public function setRole(int $role)
+    public function setRole(string $role)
     {
-        $this->role = $role;
+        $this->role = RoleConstants::$NUMBER_FROM_ROLES[$role];
     }
 
     public function setNotification(bool $notification)
@@ -137,7 +138,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getNotification()
+    public function isNotification()
     {
         return $this->notification;
     }
