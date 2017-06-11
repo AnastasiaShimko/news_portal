@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Authorisation{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-</head>
-<body>
+{% extends 'user/register.html.twig' %}
+
+{% block title %}Authorisation{% endblock %}
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
     <div class="content">
         <h1>Authorisation</h1>
         <form action="{{ path('login') }}" method="post">
@@ -22,13 +13,14 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="_password" />
             </div>
+            {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
             <br>
-            <button type="submit">login</button>
+            <button type="submit">Login</button>
             <br>
             <p>Haven't registered yet?</p>
             <a href="/register">Go to registration page...</a>
         </form>
     </div>
 {% endblock %}
-</body>
-</html>
