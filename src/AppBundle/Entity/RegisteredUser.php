@@ -13,6 +13,11 @@ class RegisteredUser
 
     /**
      * @Assert\NotBlank()
+     */
+    private $oldPassword;
+
+    /**
+     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -28,6 +33,8 @@ class RegisteredUser
     {
         $this->password = $password;
     }
+
+
 
     public function getEmail()
     {
@@ -47,5 +54,15 @@ class RegisteredUser
     public function setNotification(bool $notification)
     {
         $this->notification = $notification;
+    }
+
+    public function getOldPassword()
+    {
+        return $this->newPassword;
+    }
+
+    public function setOldPassword(string $oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
     }
 }
