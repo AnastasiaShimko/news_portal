@@ -2,15 +2,14 @@
 namespace AppBundle\Controller\Account;
 
 use AppBundle\Entity\RegisteredUser;
+use AppBundle\Entity\User;
 use AppBundle\Form\RegistrationForm;
-use AppBundle\Providers\UserProvider;
-use AppBundle\Services\Mailer;
+use AppBundle\Provider\UserProvider;
+use AppBundle\Service\UsersMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 class RegistrationController extends Controller
 {
@@ -19,11 +18,10 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="registration")
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder,
-                                   EntityManagerInterface $em, \Swift_Mailer $mailer)
+    public function registerAction(Request $request)
     {
         $form = $this->createRegistrationForm($request);
-        if ($this->tryCreateUser($form, $em, $passwordEncoder, $mailer)) {
+        if ($this->tryCreateUser($form)) {
             return $this->redirectToRoute('login');
         }
         return $this->render(
@@ -41,16 +39,23 @@ class RegistrationController extends Controller
         return $form;
     }
 
-    private function tryCreateUser(Form $form, EntityManagerInterface $em,  UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer){
-        $userProvider = new UserProvider();
+    private function tryCreateUser(Form $form){
+        $userProvider = $this->container->get(UserProvider::class);
         if ($form->isSubmitted() && $form->isValid()
-            && !$userProvider->getUser($em, $this->userInForm->getEmail())) {
-            $user = $userProvider->createUser($this->userInForm, $em, $passwordEncoder);
-            $twig = $this->get('twig');
-            (new Mailer())->sendRegistrationMail($mailer, $user, $twig);
+            && !$userProvider->getUser($this->userInForm->getEmail())) {
+            $user = $userProvider->createUser($this->userInForm);
+            $this->sendRegistrationMail($user);
             return true;
         }
         return false;
+    }
+
+
+    private function sendRegistrationMail(User $user){
+        $mailer = $this->container->get(UsersMailer::class);
+        $info =  array('id' => md5($user->getId().$user->getPassword().$user->getEmail()));
+        $mailer->sendMessage('Confirm Registration', 'fea.ortenore@gmail.com',
+            'user/registration.html.twig', $info);#$user->getEmail()
     }
 
 }

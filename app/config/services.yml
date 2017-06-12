@@ -29,6 +29,20 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\Provider\UserProvider:
+        public: true
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $passwordEncoder: '@security.user_password_encoder.generic'
+
+    AppBundle\Service\UsersMailer:
+        public: true
+        arguments:
+            $mailer: '@mailer'
+            $twig: '@twig'
+            $adminEmail: '%mailer_user%'
+
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

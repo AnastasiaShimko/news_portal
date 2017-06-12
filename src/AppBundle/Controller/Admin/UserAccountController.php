@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\Entity\User;
 use AppBundle\Entity\Roules;
 use AppBundle\Form\UserChangeByAdminForm;
-use AppBundle\Providers\UserProvider;
-use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Provider\UserProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +13,17 @@ class UserAccountController extends Controller
 {
 
     private $roles;
+
     /**
      * @Route("/accounts", name="account_control")
      */
-    public function controlAction(EntityManagerInterface $em, Request $request){
+    public function controlAction(Request $request){
 
-        $users= $this->getAllActiveUsers($em);
+        $users= $this->getAllActiveUsers();
         $form = $this->createUserChangeForm($users, $request);
 
         if ($form->isValid()){
-            $this->changeUsersRole($users, $em);
+            $this->changeUsersRole($users);
         }
         return $this->render(
             'admin/show.html.twig',
@@ -42,17 +41,17 @@ class UserAccountController extends Controller
         return $form;
     }
 
-    public function changeUsersRole(array $users, EntityManagerInterface $em){
+    public function changeUsersRole(array $users){
         foreach ($users as $user){
-            (new UserProvider())->changeRole($user,  $this->roles->getRole($user->getId()), $em);
+            $this->container->get(UserProvider::class)->changeRole($user,  $this->roles->getRole($user->getId()));
         }
     }
 
-    private function getAllActiveUsers(EntityManagerInterface $em){
-        $userProvider = new UserProvider();
+    private function getAllActiveUsers(){
+        $userProvider = $this->container->get(UserProvider::class);
 
-        return   array_merge(array_merge($userProvider->getAllUsersByRole($em, 'ROLE_USER'),
-            $userProvider->getAllUsersByRole($em, 'ROLE_MANAGER')),
-            $userProvider->getAllUsersByRole($em, 'ROLE_ADMIN'));
+        return   array_merge(array_merge($userProvider->getAllUsersByRole('ROLE_USER'),
+            $userProvider->getAllUsersByRole('ROLE_MANAGER')),
+            $userProvider->getAllUsersByRole('ROLE_ADMIN'));
     }
 }

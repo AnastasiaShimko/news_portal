@@ -3,13 +3,11 @@
 namespace AppBundle\Controller\Account;
 
 use AppBundle\Entity\User;
-use AppBundle\Providers\UserProvider;
-use AppBundle\Services\Mailer;
-use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Provider\UserProvider;
+use AppBundle\Service\UsersMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserChangePasswordController extends Controller
@@ -18,35 +16,39 @@ class UserChangePasswordController extends Controller
     /**
      * @Route("/password_change", name="password_change")
      */
-    public function changeAction(EntityManagerInterface $em,  UserPasswordEncoderInterface $passwordEncoder,
-                                 \Swift_Mailer $mailer, Request $request)
+    public function changeAction(Request $request)
     {
         $email = $this->getEmailFromForm($request);
-        if ($email && $this->changePasswordIfValidEmail($em, $email,  $passwordEncoder, $mailer)) {
+        if ($email && $this->changePasswordIfValidEmail($email)) {
             return $this->redirectToRoute('login');
         }
         return $this->render('user/email.html.twig');
     }
 
-    private function changePasswordIfValidEmail(EntityManagerInterface $em, string $email,
-                                           UserPasswordEncoderInterface  $passwordEncoder, \Swift_Mailer $mailer){
-        $user = (new UserProvider())->getUser($em, $email);
+    private function changePasswordIfValidEmail(string $email){
+        $user = $this->container->get(UserProvider::class)->getUser($email);
         if (User::isValidUser($user)){
-            $this->generateChangePassword($em, $user, $passwordEncoder, $mailer);
+            $this->generateChangePassword($user);
             return true;
         }
         return false;
     }
 
-    private function generateChangePassword(EntityManagerInterface $em, User $user,
-                                    UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer){
+    private function generateChangePassword(User $user){
         $password = base64_encode(random_bytes(10));
-        (new UserProvider())->changePassword($em, $user, $password, $passwordEncoder);
-        $twig = $this->get('twig');
-        (new Mailer())->sendChangePasswordMail($mailer, $user->getEmail(), $password, $twig);
+        $this->container->get(UserProvider::class)->changePassword($user, $password);
+        $this->sendChangePasswordMail($user->getEmail(), $password);
     }
 
-    public function getEmailFromForm(Request $request) {
+
+    private function sendChangePasswordMail(string $email, string $newPassword){
+        $mailer = $this->container->get(UsersMailer::class);
+        $info = array('password' => $newPassword);
+        $mailer->sendMessage('Password Change Email', 'fea.ortenore@gmail.com',
+            'user/change.html.twig', $info);#$user->getEmail()
+    }
+
+    private function getEmailFromForm(Request $request) {
         if ( $request->getMethod() == Request::METHOD_POST ) {
             return $request->get('email');
         }

@@ -4,9 +4,7 @@ namespace AppBundle\Controller\Account;
 
 
 use AppBundle\Entity\User;
-use AppBundle\Providers\UserProvider;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Provider\UserProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,20 +14,20 @@ class UserValidationController extends Controller
     /**
      * @Route("/validate/{id}", name="validation")
      */
-    public function validateAction($id, EntityManagerInterface $em)
+    public function validateAction($id)
     {
-        $user = $this->getUserByConfirmId($id, $em);
+        $user = $this->getUserByConfirmId($id);
         if ($user) {
-            (new UserProvider())->changeRole($user, 'ROLE_USER', $em);
+            $this->container->get(UserProvider::class)->changeRole($user, 'ROLE_USER');
             return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('registration');
     }
 
 
-    private function getUserByConfirmId($id, EntityManager $em){
+    private function getUserByConfirmId($id){
         $user = null;
-        foreach ((new UserProvider())->getAllUsersByRole($em, 'ROLE_NOT_CONFIRMED') as $value){
+        foreach ($this->container->get(UserProvider::class)->getAllUsersByRole('ROLE_NOT_CONFIRMED') as $value){
             if($this->checkConfirmId($value, $id)){
                 $user = $value;
             }
