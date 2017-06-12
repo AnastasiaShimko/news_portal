@@ -4,6 +4,8 @@ namespace AppBundle\Provider;
 
 
 use AppBundle\Constants\RoleConstants;
+use AppBundle\Entity\BasicUser;
+use AppBundle\Entity\ChangedUser;
 use AppBundle\Entity\RegisteredUser;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,16 +33,22 @@ class UserProvider
         return $user;
     }
 
-    private function mergeUser(RegisteredUser $registeredUser,  User $user){
-        $password = $this->passwordEncoder->encodePassword($user, $registeredUser->getPassword());
-        $user->setPassword($password);
-        $user->setEmail($registeredUser->getEmail());
-        $user->setNotification($registeredUser->getEmail());
+    private function mergeUser(BasicUser $basicUser, User $user)
+    {
+        if ($basicUser->getPassword()) {
+            $password = $this->passwordEncoder->encodePassword($user, $basicUser->getPassword());
+            $user->setPassword($password);
+        }
+        if ($basicUser->getEmail()) {
+            $user->setEmail($basicUser->getEmail());
+        }
+        $user->setNotification($basicUser->getNotification());
     }
 
     public function changePassword(User $user, string $password){
         $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
         $this->entityManager->flush();
+
     }
 
     public function getUser(string $email){
@@ -52,6 +60,18 @@ class UserProvider
         return $this->repository->findBy(array('role' => RoleConstants::$NUMBER_FROM_ROLES[$role]));
     }
 
+    public function changeUser(ChangedUser $changedUser, User $user){
+        if($this->passwordEncoder->isPasswordValid($user, $changedUser->getOldPassword())){
+            $this->mergeUser($changedUser, $user);
+            $this->entityManager->flush();
+            return true;
+        }
+        return false;
+    }
+
+    public function enc($user, $password){
+        return $this->passwordEncoder->encodePassword($user, $password);
+    }
 
     public function changeRole(User $user, string $role){
         if (in_array($role,  RoleConstants::$ROLES_FROM_NUMBER) && $user->getRole()!= $role){

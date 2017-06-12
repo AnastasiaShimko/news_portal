@@ -50,12 +50,10 @@ class RegistrationController extends Controller
         return false;
     }
 
-
     private function sendRegistrationMail(User $user){
         $mailer = $this->container->get(UsersMailer::class);
         $info =  array('id' => md5($user->getId().$user->getPassword().$user->getEmail()));
         $mailer->sendMessage('Confirm Registration', 'fea.ortenore@gmail.com',
             'user/registration.html.twig', $info);#$user->getEmail()
     }
-
 }
