@@ -18,6 +18,7 @@ class ChangeUserForm extends AbstractType
             ->add('oldPassword', PasswordType::class)
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
+                'required' => false,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
