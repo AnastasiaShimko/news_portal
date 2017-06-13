@@ -1,7 +1,19 @@
-<form action="{{ path('password_change') }}" method="post">
-    <div>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email"/>
-    </div>
-    <button type="submit">send</button>
-</form>
+{% extends 'base.html.twig' %}
+{% block title %}Password{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% endblock %}
+{% block body %}
+<div>
+    <h1>Send new password</h1>
+    <form action="{{ path('password_change') }}" method="post">
+        <div>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"/>
+        </div>
+        <br>
+        <button type="submit">Send</button>
+    </form>
+</div>
+{% endblock %}
