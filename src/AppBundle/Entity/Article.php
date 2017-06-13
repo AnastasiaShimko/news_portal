@@ -3,12 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="articles_main_part")
- * @ORM\Entity
+ * @UniqueEntity(fields="name", message="Name already taken")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
  */
 class Article
 {
@@ -22,15 +23,17 @@ class Article
     /**
      * @ORM\Column(type="integer")
      */
-    private $visiters;
+    private $visitorCount;
 
     /**
      * @ORM\Column(type="string", length=64, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank()
      */
     private $author;
 
@@ -41,6 +44,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank()
      */
     private $annotation;
 
@@ -51,19 +55,16 @@ class Article
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Article")
-     * @ORM\JoinTable(name="articles",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      )
+     * @ORM\OneToOne(targetEntity="ArticleFullText")
+     * @ORM\JoinColumn(name="full_text_id", referencedColumnName="id")
      */
-    private $articles;
-
+    private $fullText;
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visitorCount = 0;
     }
 
     /**
@@ -79,13 +80,13 @@ class Article
     /**
      * Set visiters
      *
-     * @param integer $visiters
+     * @param integer $visitorCount
      *
      * @return Article
      */
-    public function setVisiters($visiters)
+    public function setVisitorCount($visitorCount)
     {
-        $this->visiters = $visiters;
+        $this->visitorCount = $visitorCount;
 
         return $this;
     }
@@ -95,9 +96,9 @@ class Article
      *
      * @return integer
      */
-    public function getVisiters()
+    public function getVisitorCount()
     {
-        return $this->visiters;
+        return $this->visitorCount;
     }
 
     /**
@@ -221,36 +222,26 @@ class Article
     }
 
     /**
-     * Add article
+     * Set fullText
      *
-     * @param \AppBundle\Entity\Article $article
+     * @param \AppBundle\Entity\ArticleFullText $fullText
      *
      * @return Article
      */
-    public function addArticle(\AppBundle\Entity\Article $article)
+    public function setFullText(\AppBundle\Entity\ArticleFullText $fullText = null)
     {
-        $this->articles[] = $article;
+        $this->fullText = $fullText;
 
         return $this;
     }
 
     /**
-     * Remove article
+     * Get fullText
      *
-     * @param \AppBundle\Entity\Article $article
+     * @return \AppBundle\Entity\ArticleFullText
      */
-    public function removeArticle(\AppBundle\Entity\Article $article)
+    public function getFullText()
     {
-        $this->articles->removeElement($article);
-    }
-
-    /**
-     * Get articles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArticles()
-    {
-        return $this->articles;
+        return $this->fullText;
     }
 }

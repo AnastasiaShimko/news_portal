@@ -3,7 +3,6 @@
 namespace AppBundle\Controller\User;
 
 use AppBundle\Entity\ChangedUser;
-use AppBundle\Entity\User;
 use AppBundle\Form\ChangeUserForm;
 use AppBundle\Provider\UserProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

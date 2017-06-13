@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserProvider
 {
-
     private $entityManager;
     private $passwordEncoder;
     private $repository;
@@ -55,7 +54,6 @@ class UserProvider
         return  $this->repository->findOneBy(array('email' => $email));
     }
 
-
     public function getAllUsersByRole(string $role){
         return $this->repository->findBy(array('role' => RoleConstants::$NUMBER_FROM_ROLES[$role]));
     }
@@ -67,10 +65,6 @@ class UserProvider
             return true;
         }
         return false;
-    }
-
-    public function enc($user, $password){
-        return $this->passwordEncoder->encodePassword($user, $password);
     }
 
     public function changeRole(User $user, string $role){
