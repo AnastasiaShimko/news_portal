@@ -44,6 +44,10 @@ security:
         - { path: ^/password_change, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/main, roles: ROLE_USER }
         - { path: ^/change_user, roles: ROLE_USER }
+        - { path: ^/article/, roles: ROLE_USER }
+        - { path: ^/change_article/, roles: ROLE_MANAGER }
+        - { path: ^/new_article, roles: ROLE_MANAGER }
+        - { path: ^/delete_article/, roles: ROLE_MANAGER }
         - { path: ^/accounts, roles: ROLE_ADMIN }
 
 

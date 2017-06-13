@@ -65,6 +65,17 @@ class Article
     public function __construct()
     {
         $this->visitorCount = 0;
+        $this->fullText = new ArticleFullText();
+    }
+
+    public function getText()
+    {
+        return $this->fullText->getFullText();
+    }
+
+    public function setText(string $text)
+    {
+        $this->fullText->setFullText($text);
     }
 
     /**
