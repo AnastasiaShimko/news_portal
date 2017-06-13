@@ -1,1 +1,12 @@
-hkhkjhkhkhk
+{% extends 'base.html.twig' %}
+
+{% block title %}News Portal{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% endblock %}
+{% block body %}
+    <div class="menu">
+        {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+    </div>
+{% endblock %}

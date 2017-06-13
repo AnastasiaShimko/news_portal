@@ -1,5 +1,10 @@
-<h3>You did it! You change your password!</h3>
-
-Your new password is {{ password }}.
-
-Have a nice day!
+{% extends 'base.html.twig' %}
+{% block title %}Password{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% endblock %}
+{% block body %}
+        <h3>You did it! You change your password!</h3>
+        <p>Your new password is {{ password }}.<br>Have a nice day!</p>
+{% endblock %}
