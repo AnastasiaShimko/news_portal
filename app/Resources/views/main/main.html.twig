@@ -6,16 +6,19 @@
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
 {% endblock %}
 {% block body %}
-    <div class="menu">
-        {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
-    </div>
-    <div class="leftsidebar">
-        <!--Categories listing.-->
-    </div>
+        <div class="menu">
+            {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+        </div>
     <div class="content">
-        <!--Top 5 articles. Search.-->
-     </div>
-     <div class="rightsidebar">
-         <!--Settings for articles view.-->
-     </div>
+        <div class="rightsidebar">
+            Settings for articles view.
+        </div>
+        <div class="articles">
+            Top 5 articles. Search.
+         </div>
+        <div class="leftsidebar">
+            Categories listing.
+        </div>
+    </div>
+
 {% endblock %}
