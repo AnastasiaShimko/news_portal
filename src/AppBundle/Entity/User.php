@@ -1,18 +1,18 @@
 <?php
 namespace AppBundle\Entity;
 
-use AppBundle\Constants\RoleConstants;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @UniqueEntity(fields="email", message="Name already taken")
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class User extends BasicUser implements UserInterface, \Serializable
+class User extends BasicUser implements AdvancedUserInterface, \Serializable
 {
-
     public function __construct()
     {
         $this->role = 0;
@@ -23,14 +23,17 @@ class User extends BasicUser implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=64)
      */
     protected $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="string", length=60, unique=true)
      */
     protected $email;
@@ -43,7 +46,7 @@ class User extends BasicUser implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="integer")
      */
-    private $role;
+    protected $role;
 
     /**
      * @return string
@@ -106,35 +109,51 @@ class User extends BasicUser implements UserInterface, \Serializable
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return Role
-     */
-    public function getRole()
-    {
-        return RoleConstants::$ROLES_FROM_NUMBER[$this->role];
-    }
-
-    /**
-     * @param Role $role
-     */
-    public function setRole(string $role)
-    {
-        $this->role = RoleConstants::$NUMBER_FROM_ROLES[$role];
-    }
-
-    /**
      * @param User $user
      * @return bool
      */
     public static function isValidUser(User $user){
         return $user && $user->getRole()!= 'ROLE_NOT_CONFIRMED'
             && $user->getRole()!='ROLE_DELETED';
+    }
+
+    /**
+     * Checks whether the user's account has expired.
+     * @return bool true if the user's account is non expired, false otherwise
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user is locked.
+     * @return bool true if the user is not locked, false otherwise
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     * @return bool true if the user's credentials are non expired, false otherwise
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     * @return bool true if the user is enabled, false otherwise
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return self::isValidUser($this);
     }
 }

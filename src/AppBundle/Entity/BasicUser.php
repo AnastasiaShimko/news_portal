@@ -3,8 +3,14 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Constants\RoleConstants;
+
 class BasicUser
 {
+    protected $id;
+
+    protected $role;
+
     protected $password;
 
     protected $email;
@@ -57,5 +63,29 @@ class BasicUser
     public function setNotification(bool $notification)
     {
         $this->notification = $notification;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return Role
+     */
+    public function getRole()
+    {
+        return RoleConstants::$ROLES_FROM_NUMBER[$this->role];
+    }
+
+    /**
+     * @param Role $role
+     */
+    public function setRole(string $role)
+    {
+        $this->role = RoleConstants::$NUMBER_FROM_ROLES[$role];
     }
 }

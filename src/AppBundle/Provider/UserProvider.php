@@ -24,30 +24,10 @@ class UserProvider
         $this->repository = $entityManager->getRepository('AppBundle:User');
     }
 
-    public function createUser(RegisteredUser $registeredUser){
-        $user = new User();
-        $this->mergeUser($registeredUser, $user);
+    public function createUser(User $user){
+        $this->codePassword($user, $user->getPassword());
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-        return $user;
-    }
-
-    private function mergeUser(BasicUser $basicUser, User $user)
-    {
-        if ($basicUser->getPassword()) {
-            $password = $this->passwordEncoder->encodePassword($user, $basicUser->getPassword());
-            $user->setPassword($password);
-        }
-        if ($basicUser->getEmail()) {
-            $user->setEmail($basicUser->getEmail());
-        }
-        $user->setNotification($basicUser->getNotification());
-    }
-
-    public function changePassword(User $user, string $password){
-        $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-        $this->entityManager->flush();
-
     }
 
     public function getUser(string $email){
@@ -58,9 +38,12 @@ class UserProvider
         return $this->repository->findBy(array('role' => RoleConstants::$NUMBER_FROM_ROLES[$role]));
     }
 
-    public function changeUser(ChangedUser $changedUser, User $user){
+    public function checkPasswordChangeUser(ChangedUser $changedUser, User $user){
         if($this->passwordEncoder->isPasswordValid($user, $changedUser->getOldPassword())){
-            $this->mergeUser($changedUser, $user);
+            $user->setNotification($changedUser->getNotification());
+            if($changedUser->getPassword()) {
+                $this->codePassword($user, $changedUser->getPassword());
+            }
             $this->entityManager->flush();
             return true;
         }
@@ -72,5 +55,11 @@ class UserProvider
             $user->setRole($role);
             $this->entityManager->flush();
         }
+    }
+
+    public function codePassword(User $user, $password)
+    {
+        $password = $this->passwordEncoder->encodePassword($user, $password);
+        $user->setPassword($password);
     }
 }

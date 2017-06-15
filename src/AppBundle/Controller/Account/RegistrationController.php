@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends Controller
 {
-    private $userInForm;
+    private $user;
 
     /**
      * @Route("/register", name="registration")
@@ -21,7 +21,8 @@ class RegistrationController extends Controller
     public function registerAction(Request $request)
     {
         $form = $this->createRegistrationForm($request);
-        if ($this->tryCreateUser($form)) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->createUser();
             return $this->redirectToRoute('login');
         }
         return $this->render(
@@ -31,28 +32,25 @@ class RegistrationController extends Controller
     }
 
     private function createRegistrationForm(Request $request){
-        if (!$this->userInForm){
-            $this->userInForm = new RegisteredUser();
+        if (!$this->user){
+            $this->user = new User();
         }
-        $form = $this->createForm(RegistrationForm::class, $this->userInForm);
+        $form = $this->createForm(RegistrationForm::class, $this->user);
         $form->handleRequest($request);
         return $form;
     }
 
-    private function tryCreateUser(Form $form){
+    private function createUser(){
         $userProvider = $this->container->get(UserProvider::class);
-        if ($form->isSubmitted() && $form->isValid()
-            && !$userProvider->getUser($this->userInForm->getEmail())) {
-            $user = $userProvider->createUser($this->userInForm);
-            $this->sendRegistrationMail($user);
-            return true;
-        }
-        return false;
+        $userProvider->createUser($this->user);
+        $this->sendRegistrationMail();
     }
 
-    private function sendRegistrationMail(User $user){
+    private function sendRegistrationMail(){
         $mailer = $this->container->get(UsersMailer::class);
-        $info =  array('id' => md5($user->getId().$user->getPassword().$user->getEmail()));
+        $info =  array(
+            'id' => md5($this->user->getId().$this->user->getPassword().$this->user->getEmail())
+        );
         $mailer->sendMessage('Confirm Registration', 'fea.ortenore@gmail.com',
             'user/registration.html.twig', $info);#$user->getEmail()
     }

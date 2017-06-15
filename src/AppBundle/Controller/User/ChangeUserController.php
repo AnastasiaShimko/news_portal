@@ -34,9 +34,8 @@ class ChangeUserController extends Controller
     private function tryChangeUser(Form $form)
     {
         $userProvider = $this->container->get(UserProvider::class);
-
         return $form->isSubmitted() && $form->isValid() &&
-            $userProvider->changeUser($this->userInForm, $this->getUser());
+            $userProvider->checkPasswordChangeUser($this->userInForm, $this->getUser());
     }
 
     private function createChangeForm(Request $request){

@@ -18,14 +18,13 @@ class UserAccountController extends Controller
      * @Route("/accounts", name="account_control")
      */
     public function controlAction(Request $request){
-
         $users= $this->getAllActiveUsers();
         $form = $this->createUserChangeForm($users, $request);
-
         if ($form->isValid()){
             $this->changeUsersRole($users);
-        }
-        return $this->render(
+            $users= $this->getAllActiveUsers();
+            $form = $this->createUserChangeForm($users, $request);
+        }return $this->render(
             'admin/show.html.twig',
             array('users' => $users, 'form' => $form->createView())
         );
@@ -49,7 +48,6 @@ class UserAccountController extends Controller
 
     private function getAllActiveUsers(){
         $userProvider = $this->container->get(UserProvider::class);
-
         return   array_merge(array_merge($userProvider->getAllUsersByRole('ROLE_USER'),
             $userProvider->getAllUsersByRole('ROLE_MANAGER')),
             $userProvider->getAllUsersByRole('ROLE_ADMIN'));

@@ -36,7 +36,7 @@ class UserChangePasswordController extends Controller
 
     private function generateChangePassword(User $user){
         $password = base64_encode(random_bytes(10));
-        $this->container->get(UserProvider::class)->changePassword($user, $password);
+        $this->container->get(UserProvider::class)->codePassword($user, $password);
         $this->sendChangePasswordMail($user->getEmail(), $password);
     }
 

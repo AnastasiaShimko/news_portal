@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class Builder implements ContainerAwareInterface
 {
-    use ContainerAwareTrait;
+use ContainerAwareTrait;
 
     public function mainMenu(FactoryInterface $factory, array $options)
     {
@@ -20,8 +20,6 @@ class Builder implements ContainerAwareInterface
         $menu->addChild('Add articles', array('route' => 'new_article'));
         $menu->addChild('Users', array('route' => 'account_control'));
         $menu->addChild('Home', array('route' => 'main'));
-
         return $menu;
     }
 }
-
