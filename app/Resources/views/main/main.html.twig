@@ -4,21 +4,29 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+        {% block additionalcss %}
+        {% endblock %}
 {% endblock %}
 {% block body %}
         <div class="menu">
             {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
         </div>
-    <div>
-        <div class="content" id="rightsidebar">
-            Settings for articles view.
+        <div>
+            {% block rightsidebar %}
+            <div class="content" id="rightsidebar">
+                Settings for articles view.
+            </div>
+            {% endblock %}
+            {% block content %}
+            <div class="content" id="articles">
+                <h3>Hello, {{ app.user.email }}!</h3>
+                <a href="{{ path('change_user') }}">Change properties</a>
+             </div>
+            {% endblock %}
+            {% block leftsidebar %}
+            <div class="content" id="leftsidebar">
+                Categories listing.
+            </div>
+            {% endblock %}
         </div>
-        <div class="content" id="articles">
-            Top 5 articles. Search.
-         </div>
-        <div class="content" id="leftsidebar">
-            Categories listing.
-        </div>
-    </div>
-
 {% endblock %}

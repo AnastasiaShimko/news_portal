@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    margin-top: 4%;
+}
+.content a {
+    text-decoration: none;
+    color: black;
+    margin-left: 10%;
+}
+h3{
+    text-align: center;
+    font-size: 1.2em;
+    font-family: Arial;
+}
+#annotation, #fulltext{
+    border: solid black 1px;
+    width: 90%;
+    margin: auto;
+    padding: 1%;
+}
+#date{
+    margin-right: 10%;
+    float: right;
+}
+#managerbar{
+    margin-top: 7%;
+}

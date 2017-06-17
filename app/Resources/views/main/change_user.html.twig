@@ -1,15 +1,12 @@
-{% extends 'base.html.twig' %}
-{% block title %}Password{% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% extends 'main/main.html.twig' %}
+{% block additionalcss %}
+    <link rel="stylesheet" href="{{ asset('css/change_user.css') }}" />
 {% endblock %}
-{% block body %}
-
+{% block content %}
+<div class="content" id="articles">
 {{ form_start(form) }}
-    <p>You logged in as</p>{{ app.user.email }}
+    <h3>You logged in as {{ app.user.email }}</h3>
     <button type="submit">Change</button>
-    <br>
-    <a href="{{ path('main') }}">Back to main page</a>
 {{ form_end(form) }}
+</div>
 {% endblock %}

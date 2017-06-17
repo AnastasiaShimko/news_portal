@@ -1,44 +1,31 @@
 {% extends 'main/main.html.twig' %}
 
-{% block body %}
-    <div class="menu">
-        {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
-    </div>
-    <div>
-        <div class="content" id="rightsidebar">
-            Settings for articles view.
-        </div>
+{% block content %}
         <div class="content" id="articles">
             <h3>Users</h3>
             {{ form_start(form) }}
-                <table>
                     {% for user in users %}
-                    <tr>
-                        <td>User ID</td>
-                        <td>{{ user.id }}</td>
-                    </tr>
-                    <tr>
-                        <td>User email</td>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <td>User role</td>
-                        <td> {{ form_row(form.roles[user.id]) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Notification</td>
-                        <td>{{ user.notification }}</td>
-                    </tr>
-                    <td style="border: none;"></td>
+                    <table>
+                            <tr>
+                                <td>User ID</td>
+                                <td>{{ user.id }}</td>
+                            </tr>
+                            <tr>
+                                <td>User email</td>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>User role</td>
+                                <td> {{ form_row(form.roles[user.id]) }}</td>
+                            </tr>
+                            <tr>
+                                <td>Notification</td>
+                                <td>{{ user.notification }}</td>
+                            </tr>
+                            <td style="border: none;"></td>
+                    </table>
                     {% endfor %}
-                </table>
             <button type="submit" style="margin: 2%;">Change</button>
             {{ form_end(form) }}
         </div>
-        <div class="content" id="leftsidebar">
-            Categories listing.
-        </div>
-    </div>
-
-
 {% endblock %}
