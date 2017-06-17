@@ -13,6 +13,8 @@ use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityManager;
 
+use Doctrine\ORM\QueryBuilder;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,12 +23,12 @@ class ShowArticlesListController extends Controller
     /**
      * @Route("/show", name="show_articles")
      */
-    public function showAllAction(EntityManager $em)
+    public function showAllAction(EntityManager $em, Request $request)
     {
         $repository = $em->getRepository(Article::class);
-        $articles = $repository->getAllArticles('date');
-        return $this->render('main/main.html.twig', array(
-        ));
+        $query = $repository->createQueryBuilder('a')
+        ->orderBy('a.date', 'ASC');
+        return $this->renderPaginator($query, $request);
     }
 
     /**
@@ -41,15 +43,21 @@ class ShowArticlesListController extends Controller
     /**
      * @Route("/category/{id}", name="category_articles")
      */
-    public function getCategoryAction($id, EntityManager $em)
+    public function getCategoryAction($id, EntityManager $em, Request $request)
     {
         $repository = $em->getRepository(Article::class);
+        $query = $repository->createQueryBuilder('a');
         $category = $em->getRepository(Category::class)->find($id);
+        $query->where('a.category = '.$category->getId());
         $categories = $this->getSubCategories($category);
-        $articles = $repository->getAllArticlesInCategory($categories, 'date');
-        return $this->render('main/main.html.twig', array(
-        ));
+        foreach ($categories as $idCat){
+            $query->orWhere('a.category = '.$idCat);
+        }
+        $query->orderBy('a.date', 'ASC');
+        return $this->renderPaginator($query, $request);
     }
+
+
 
     private function getSubCategories(Category $category){
         $categories = array();
@@ -63,4 +71,16 @@ class ShowArticlesListController extends Controller
         }
         return $categories;
     }
+
+
+   private function renderPaginator(QueryBuilder $query, Request $request){
+       $paginator  = $this->get('knp_paginator');
+       $pagination = $paginator->paginate(
+           $query,
+           $request->query->getInt('page', 1),
+           5
+       );
+       return $this->render('main/list.html.twig', array('pagination' => $pagination));
+   }
+
 }
