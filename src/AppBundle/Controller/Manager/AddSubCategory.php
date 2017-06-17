@@ -11,11 +11,11 @@ namespace AppBundle\Controller\Manager;
 
 use AppBundle\Entity\Category;
 use AppBundle\Form\CategoryAddForm;
-use Composer\DependencyResolver\Request;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class AddSubCategory extends Controller
 {
