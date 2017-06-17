@@ -24,6 +24,7 @@ class UserChangeByAdminForm extends AbstractType
         $builder->add('roles', CollectionType::class, array(
             'entry_type'   => ChoiceType::class,
             'entry_options'  => array(
+                'label'=>' ',
                 'choices'  => array(
                     'Admin' => 'ROLE_ADMIN',
                     'Manager'     => 'ROLE_MANAGER',
