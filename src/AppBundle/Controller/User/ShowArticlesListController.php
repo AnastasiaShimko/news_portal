@@ -36,8 +36,16 @@ class ShowArticlesListController extends Controller
      */
     public function findAction(EntityManager $em, Request $request)
     {
-        return $this->render('main/main.html.twig', array(
-        ));
+        $repository = $em->getRepository(Article::class);
+        $query = $repository->createQueryBuilder('a');
+        $category = $em->getRepository(Category::class)->find($id);
+        $query->where('a.category = '.$category->getId());
+        $categories = $this->getSubCategories($category);
+        foreach ($categories as $idCat){
+            $query->orWhere('a.category = '.$idCat);
+        }
+        $query->orderBy('a.date', 'ASC');
+        return $this->renderPaginator($query, $request);
     }
 
     /**
@@ -63,11 +71,10 @@ class ShowArticlesListController extends Controller
         $categories = array();
         $sub = array($category);
         while (sizeof($sub)!=0){
-            foreach ($sub[0]->getChilds() as $child){
+            foreach (array_shift($sub)->getChilds() as $child){
                 $sub[] = $child;
                 $categories[] = $child->getId();
             }
-            unset($sub[0]);
         }
         return $categories;
     }
