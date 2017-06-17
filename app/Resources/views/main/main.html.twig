@@ -9,16 +9,21 @@
         <div class="menu">
             {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
         </div>
-    <div>
-        <div class="content" id="rightsidebar">
-            Settings for articles view.
+        <div>
+            {% block rightsidebar %}
+            <div class="content" id="rightsidebar">
+                Settings for articles view.
+            </div>
+            {% endblock %}
+            {% block content %}
+            <div class="content" id="articles">
+                Top 5 articles. Search.
+             </div>
+            {% endblock %}
+            {% block leftsidebar %}
+            <div class="content" id="leftsidebar">
+                Categories listing.
+            </div>
+            {% endblock %}
         </div>
-        <div class="content" id="articles">
-            Top 5 articles. Search.
-         </div>
-        <div class="content" id="leftsidebar">
-            Categories listing.
-        </div>
-    </div>
-
 {% endblock %}
