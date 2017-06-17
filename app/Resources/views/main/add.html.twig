@@ -1,16 +1,12 @@
 {% extends 'main/main.html.twig' %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% block additionalcss %}
     <link rel="stylesheet" href="{{ asset('css/add.css') }}" />
 {% endblock %}
 {% block content %}
     <div class="content" id="articles">
         <h3>Add new article</h3>
-    <form>
         {{ form_start(form) }}
-        {{ form_end(form) }}
-    </form>
         <button type="submit">Add new article</button>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -1,14 +1,12 @@
 {% extends 'main/main.html.twig' %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+{% block additionalcss %}
     <link rel="stylesheet" href="{{ asset('css/change_user.css') }}" />
 {% endblock %}
 {% block content %}
 <div class="content" id="articles">
 {{ form_start(form) }}
     <h3>You logged in as {{ app.user.email }}</h3>
-{{ form_end(form) }}
     <button type="submit">Change</button>
+{{ form_end(form) }}
 </div>
 {% endblock %}

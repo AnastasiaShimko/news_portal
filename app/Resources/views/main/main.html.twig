@@ -4,6 +4,8 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+        {% block additionalcss %}
+        {% endblock %}
 {% endblock %}
 {% block body %}
         <div class="menu">

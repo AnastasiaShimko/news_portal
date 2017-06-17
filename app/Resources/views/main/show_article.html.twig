@@ -1,8 +1,22 @@
-{{ article.id }}
-{{ article.name }}
-{{ article.author }}
-{{ article.category.name }}
-{{ article.fullText.fullText }}
-
+{% extends 'main/main.html.twig' %}
+{% block additionalcss %}
+    <link rel="stylesheet" href="{{ asset('css/article.css') }}" />
+{% endblock %}
+{% block content %}
+    <div class="content" id="articles">
+        <h1>{{ article.name }}</h1>
+        <h3>{{ article.author }}</h3>
+        <div id="annotation">{{ article.annotation }}</div>
+        <br>
+        <div id="fulltext">{{ article.fullText.fullText }}</div>
+        <p id="date">{{ article.date|date('Y-m-d') }}</p>
+        {% if is_granted('ROLE_MANAGER') %}
+            <div id="managerbar">
+                <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('Are you sure?')">Delete</a>
+                <a href="{{ path('change_article', {'id': article.id}) }}">Change article</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
 
 

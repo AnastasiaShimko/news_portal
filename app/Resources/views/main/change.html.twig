@@ -1,3 +1,12 @@
-{{ form_start(form) }}
-<button type="submit">Change</button>
-{{ form_end(form) }}
+{% extends 'main/main.html.twig' %}
+{% block additionalcss %}
+    <link rel="stylesheet" href="{{ asset('css/add.css') }}" />
+{% endblock %}
+{% block content %}
+    <div class="content" id="articles">
+        <h1>Change article</h1>
+        {{ form_start(form) }}
+        <button type="submit">Change</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
