@@ -9,7 +9,15 @@
 {% endblock %}
 {% block body %}
         <div class="menu">
-            {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+            {% if is_granted('ROLE_USER') %}
+                {{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
+                {{ knp_menu_render('AppBundle:Builder:managerMenu') }}
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ knp_menu_render('AppBundle:Builder:adminMenu') }}
+            {% endif %}
         </div>
         <div>
             {% block rightsidebar %}

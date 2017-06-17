@@ -3,9 +3,16 @@
 namespace AppBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
+
+/**
+ * Class Builder
+ * @Security
+ * @package AppBundle\Menu
+ */
 class Builder implements ContainerAwareInterface
 {
 use ContainerAwareTrait;
@@ -15,9 +22,19 @@ use ContainerAwareTrait;
         $menu = $factory->createItem('root');
         $menu->addChild('Profile', array('route' => 'main'));
         $menu['Profile']->addChild('Log out', array('route' => 'logout'));
+        return $menu;
+    }
+    public function managerMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem('root');
         $menu->addChild('New article', array('route' => 'new_article'));
-        $menu->addChild('Users', array('route' => 'account_control'));
         $menu->addChild('Articles', array('route' => 'main'));
+        return $menu;
+    }
+    public function adminMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem('root');
+        $menu->addChild('Users', array('route' => 'account_control'));
         return $menu;
     }
 }

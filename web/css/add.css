@@ -35,8 +35,6 @@ button {
     text-decoration: none;
     transition: 1s;
     cursor: pointer;
-    position: static;
-    bottom: 0%;
 }
 button:hover {
     background: #f2e0a9;
