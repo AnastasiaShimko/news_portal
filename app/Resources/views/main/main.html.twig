@@ -17,7 +17,8 @@
             {% endblock %}
             {% block content %}
             <div class="content" id="articles">
-                Top 5 articles. Search.
+                <h3>Hello, {{ app.user.email }}!</h3>
+                <a href="{{ path('change_user') }}">Change properties</a>
              </div>
             {% endblock %}
             {% block leftsidebar %}
