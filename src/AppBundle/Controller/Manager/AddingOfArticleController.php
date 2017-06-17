@@ -27,7 +27,6 @@ class AddingOfArticleController extends Controller
             'main/add.html.twig',
             array('form' => $form->createView())
         );
-
     }
 
     private function createAddingForm(Request $request){

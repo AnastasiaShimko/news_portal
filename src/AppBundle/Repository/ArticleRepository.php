@@ -23,4 +23,12 @@ class ArticleRepository extends EntityRepository
     public function articleChanged(){
         $this->_em->flush();
     }
+
+    public function getAllArticles(string $orderBy){
+        return $this->findBy(array(), array($orderBy => 'ASC'));
+    }
+
+    public function getAllArticlesInCategory(array $categories, string $orderBy){
+        return $this->findBy(array('category' => $categories), array($orderBy => 'ASC'));
+    }
 }

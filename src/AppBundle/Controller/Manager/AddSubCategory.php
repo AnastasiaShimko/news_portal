@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller\Manager;
 
-
 use AppBundle\Entity\Category;
 use AppBundle\Form\CategoryAddForm;
 use Doctrine\ORM\EntityManager;
@@ -34,7 +33,6 @@ class AddSubCategory extends Controller
             'main/add_category.html.twig',
             array('parent'=>$this->category->getParent()->getName(),'form' => $form->createView())
         );
-
     }
 
     private function createAddForm(Request $request, EntityManager $em, $id){
