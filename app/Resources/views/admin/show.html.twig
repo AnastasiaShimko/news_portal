@@ -1,8 +1,12 @@
 {% extends 'main/main.html.twig' %}
+{% block additionalcss %}
+    <link rel="stylesheet" href="{{ asset('css/userstable.css') }}" />
+{% endblock %}
 
 {% block content %}
         <div class="content" id="articles">
             <h3>Users</h3>
+            <div class="table">
             {{ form_start(form) }}
                     {% for user in users %}
                     <table>
@@ -25,7 +29,8 @@
                             <td style="border: none;"></td>
                     </table>
                     {% endfor %}
-            <button type="submit" style="margin: 2%;">Change</button>
+            <button type="submit">Change</button>
             {{ form_end(form) }}
+            </div>
         </div>
 {% endblock %}

@@ -1,0 +1,15 @@
+table{
+    min-width: 30%;
+    float: right;
+}
+.table{
+    margin-right: 5%;
+    margin-left: -3%;
+}
+button{
+    margin-left: 8%;
+    margin-top: 2%;
+}
+h3{
+    text-align: center;
+}
