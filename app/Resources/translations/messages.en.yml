@@ -15,4 +15,4 @@ admin: Admin
 user: User
 manager: Manager
 delete_account: Delete account
-
+user_role: User Role

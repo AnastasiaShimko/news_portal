@@ -16,7 +16,7 @@ class ChangedUser extends BasicUser
         $this->id = $id;
     }
 
-    public function getOldPassword():string
+    public function getOldPassword()
     {
         return $this->oldPassword;
     }

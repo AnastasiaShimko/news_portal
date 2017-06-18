@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: RMV
+ * Date: 15.06.2017
+ * Time: 8:20
+ */
 
 namespace AppBundle\Controller\Manager;
 
@@ -16,7 +22,7 @@ class DeleteCategoryController extends Controller
     public function registerAction($id, Request $request, EntityManager $em)
     {
         if ($this->deleteCategory($id, $em)) {
-            return $this->redirectToRoute('main');
+            return $this->redirect($request->server->get('HTTP_REFERER'));
         }
         return $this->render(
             'error/error.html.twig',

@@ -183,7 +183,9 @@ class Article
 
     public function addSimilarArticle(Article $similarArticle)
     {
-        if($this->similarArticles->count()<5) {
+        if($similarArticle->getId() != $this->getId()
+            && $this->similarArticles->count()<5
+            && !$this->similarArticles->contains($similarArticle)) {
             $this->similarArticles[] = $similarArticle;
         }
         return $this;

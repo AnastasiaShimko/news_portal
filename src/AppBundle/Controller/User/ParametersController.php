@@ -17,7 +17,7 @@ class ParametersController extends Controller
         $orderBy = $request->request->get('orderBy');
         $articleCount = $request->request->get('articleCount');
         $this->changeParameters($orderBy, $articleCount, $em);
-        return $this->render('main/params.html.twig');
+        return $this->redirect($request->server->get('HTTP_REFERER'));
     }
 
     public function changeParameters(string $orderBy, int $articleCount, EntityManager $em)

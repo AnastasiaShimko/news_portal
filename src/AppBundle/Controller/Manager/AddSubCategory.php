@@ -21,7 +21,7 @@ class AddSubCategory extends Controller
     {
         $form = $this->createAddForm($request, $em, $id);
         if ($this->tryAddCategory($form, $em)) {
-            return $this->redirectToRoute('main');
+            return $this->redirect($request->server->get('HTTP_REFERER'));
         }
         return $this->render(
             'main/add_category.html.twig',
