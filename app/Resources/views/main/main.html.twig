@@ -4,6 +4,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/rightsidebar.css') }}" />
         {% block additionalcss %}
         {% endblock %}
 {% endblock %}
@@ -24,9 +25,7 @@
              </div>
             {% endblock %}
             {% block leftsidebar %}
-            <div class="content" id="leftsidebar">
-
-            </div>
+                {% include 'main/category_tree.html.twig' %}
             {% endblock %}
         </div>
 {% endblock %}

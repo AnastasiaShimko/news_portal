@@ -1,0 +1,32 @@
+#rightsidebar button {
+    margin-left: 30%;
+    margin-top: 3%;
+    -webkit-border-radius: 11px;
+    -moz-border-radius: 11px;
+    border-radius: 11px;
+    color: #000000;
+    font-size: 1em;
+    background: #e2c791;
+    padding: 1% 2% 1% 2%;
+    text-decoration: none;
+    transition: 1s;
+    cursor: pointer;
+}
+#rightsidebar button:hover {
+    background: #f2e0a9;
+    text-decoration: none;
+}
+select{
+    padding: auto;
+    margin-right: 1%;
+    background-color: #f2e0a9;
+    float: right;
+}
+form div{
+    margin: 1%;
+    padding: 2%;
+}
+#rightsidebar form{
+    background: rgba(0,0,0,0);
+}
+
