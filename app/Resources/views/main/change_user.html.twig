@@ -6,6 +6,7 @@
 <div class="content" id="articles">
 {{ form_start(form) }}
     <h3>You logged in as {{ app.user.email }}</h3>
+    {{ form_widget(form) }}
     <button type="submit">Change</button>
 {{ form_end(form) }}
 </div>

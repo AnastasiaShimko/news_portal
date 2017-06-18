@@ -19,7 +19,8 @@ body {
 }
 .content{
     float: right;
-    height: 100vh;
+    min-height: 100vh;
+    padding-bottom: 2%;
 }
 .content{
     margin-top: 1%;
@@ -32,4 +33,10 @@ table {
 td {
     border: 1px solid black;
 }
-
+#articles h3{
+    text-align: center;
+}
+#articles a{
+    text-decoration: none;
+    margin-left: 10%;
+}
