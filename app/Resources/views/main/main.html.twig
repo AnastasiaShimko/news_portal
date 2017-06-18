@@ -16,6 +16,7 @@
             {% block rightsidebar %}
             <div class="content" id="rightsidebar">
                 {% include 'main/params.html.twig' %}
+                {% include 'main/search.html.twig' %}
             </div>
             {% endblock %}
             {% block content %}
@@ -25,7 +26,10 @@
              </div>
             {% endblock %}
             {% block leftsidebar %}
+            <div class="content" id="leftsidebar">
+                <p>Smth</p>
                 {% include 'main/category_tree.html.twig' %}
+            </div>
             {% endblock %}
         </div>
 {% endblock %}

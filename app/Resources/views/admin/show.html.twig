@@ -5,25 +5,25 @@
 
 {% block content %}
         <div class="content" id="articles">
-            <h3>Users</h3>
+            <h3>{{ 'users' | trans}}</h3>
             <div class="table">
             {{ form_start(form) }}
                     {% for user in users %}
                     <table>
                             <tr>
-                                <td>User ID</td>
+                                <td class="first">User ID</td>
                                 <td>{{ user.id }}</td>
                             </tr>
                             <tr>
-                                <td>User email</td>
+                                <td class="first">User email</td>
                                 <td>{{ user.email }}</td>
                             </tr>
                             <tr>
-                                <td>User role</td>
-                                <td> {{ form_row(form.roles[user.id]) }}</td>
+                                <td class="first">{{ form_label(form.roles[user.id]) }}</td>
+                                <td>{{ form_widget(form.roles[user.id]) }}</td>
                             </tr>
                             <tr>
-                                <td>Notification</td>
+                                <td class="first">Notification</td>
                                 <td>{{ user.notification }}</td>
                             </tr>
                             <td style="border: none;"></td>

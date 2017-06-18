@@ -22,7 +22,7 @@ select{
     background-color: #f2e0a9;
     float: right;
 }
-form div{
+#rightsidebar form div{
     margin: 1%;
     padding: 2%;
 }
