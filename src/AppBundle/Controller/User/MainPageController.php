@@ -14,7 +14,7 @@ class MainPageController extends Controller
      */
     public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
-        return $this->render('main/main.html.twig', array(
+        return $this->render('main/search.html.twig', array(
         ));
     }
 }

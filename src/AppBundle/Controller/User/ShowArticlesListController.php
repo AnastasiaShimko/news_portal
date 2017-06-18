@@ -38,18 +38,22 @@ class ShowArticlesListController extends Controller
      */
     public function findAction(EntityManager $em, Request $request)
     {
-        $repository = $em->getRepository(Article::class);
-        $query = $repository->createQueryBuilder('a');
         $search = $request->request->get("find");
-        //$search = $this->divSearchString('123');
-        //foreach ($search as $part){
-            //$sub = ' LIKE "%'.$part.'%" ';
-        $query->where('a.name LIKE "%12%"')
-            ->orWhere('a.author LIKE "%12%"')
-            ->orWhere('a.annotation LIKE "%12%"');
-        //}
-        $this->orderByParam($query);
-        return $this->renderPaginator($query, $request);
+        if($search) {
+            $repository = $em->getRepository(Article::class);
+            $query = $repository->createQueryBuilder('a');
+            $this->searchByPart($query, $search);
+            $this->orderByParam($query);
+            return $this->renderPaginator($query, $request);
+        }
+    }
+
+    private function searchByPart(QueryBuilder $query, string $search){
+        $query->andWhere('a.name LIKE :search');
+        $query->orWhere('a.author LIKE :search');
+        $query->orWhere('a.annotation LIKE :search');
+        $search = '%' . $search . '%';
+        $query->setParameter('search', $search);
     }
 
     /**
