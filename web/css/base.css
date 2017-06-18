@@ -33,4 +33,10 @@ table {
 td {
     border: 1px solid black;
 }
-
+#articles h3{
+    text-align: center;
+}
+#articles a{
+    text-decoration: none;
+    margin-left: 10%;
+}
