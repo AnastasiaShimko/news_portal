@@ -31,6 +31,6 @@ class ParametersController extends Controller
             $parameters->setArticleCount($articleCount);
             $em->flush();
         }
-        return $this->render('main/main.html.twig');
+        return $this->render('main/params.html.twig');
     }
 }

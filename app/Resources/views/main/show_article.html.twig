@@ -10,11 +10,19 @@
         <br>
         <div id="fulltext">{{ article.fullText.fullText }}</div>
         <p id="date">{{ article.date|date('Y-m-d') }}</p>
+        {% for art in article.similarArticles %}
+            {{ art.name }}<br>
+        {% endfor %}
         {% if is_granted('ROLE_MANAGER') %}
             <div id="managerbar">
                 <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('Are you sure?')">Delete</a>
                 <a href="{{ path('change_article', {'id': article.id}) }}">Change article</a>
             </div>
+            <form action="{{ path('add_similar', {'id': article.id}) }}" method="post">
+                <label for="similar">Enter the name of the similar article.</label>
+                <input type="text" id="similar" name="similar" />
+                <button type="submit">add</button>
+            </form>
         {% endif %}
     </div>
 {% endblock %}

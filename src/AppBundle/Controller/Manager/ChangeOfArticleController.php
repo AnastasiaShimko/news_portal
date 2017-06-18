@@ -30,6 +30,22 @@ class ChangeOfArticleController extends Controller
 
     }
 
+    /**
+     * @Route("/add_similar/{id}", name="add_similar")
+     */
+    public function similarAction($id, Request $request, EntityManager $em)
+    {
+        $similar = $request->request->get('similar');
+        $repository = $em->getRepository(Article::class);
+        $article = $repository->find($id);
+        if($similar && $article && ($similar = $repository->findOneBy(array('name'=>$similar)))){
+            $article->addSimilarArticle($similar);
+            $em->flush();
+        }
+        return $this->redirectToRoute('article', array('id'=>$id));
+
+    }
+
     private function createChangeForm(Request $request, EntityManager $em, $id){
         $this->article = $em->getRepository(Article::class)->find($id);
         $form = $this->createForm(ArticleAddChangeForm::class, $this->article);

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -60,11 +61,24 @@ class Article
      * @ORM\JoinColumn(name="full_text_id", referencedColumnName="id")
      */
     private $fullText;
+
+    /**
+     * Many Users have many Users.
+     * @ORM\ManyToMany(targetEntity="Article")
+     * @ORM\JoinTable(name="similar_articles",
+     *      joinColumns={@ORM\JoinColumn(name="articles_id", referencedColumnName="id")}
+     *      )
+     */
+    private $similarArticles;
+
+
+
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->similarArticles = new ArrayCollection();
         $this->visitorCount = 0;
         $this->fullText = new ArticleFullText();
     }
@@ -259,5 +273,41 @@ class Article
     public function getFullText()
     {
         return $this->fullText;
+    }
+
+
+    /**
+     * Add similarArticle
+     *
+     * @param \AppBundle\Entity\Article $similarArticle
+     *
+     * @return Article
+     */
+    public function addSimilarArticle(\AppBundle\Entity\Article $similarArticle)
+    {
+        if($this->similarArticles->count()<5) {
+            $this->similarArticles[] = $similarArticle;
+        }
+        return $this;
+    }
+
+    /**
+     * Remove similarArticle
+     *
+     * @param \AppBundle\Entity\Article $similarArticle
+     */
+    public function removeSimilarArticle(\AppBundle\Entity\Article $similarArticle)
+    {
+        $this->similarArticles->removeElement($similarArticle);
+    }
+
+    /**
+     * Get similarArticles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSimilarArticles()
+    {
+        return $this->similarArticles;
     }
 }
