@@ -194,7 +194,7 @@ class Article
         $this->similarArticles->removeElement($similarArticle);
     }
 
-    public function getSimilarArticles():ArrayCollection
+    public function getSimilarArticles()
     {
         return $this->similarArticles;
     }

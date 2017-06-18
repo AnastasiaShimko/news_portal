@@ -38,9 +38,6 @@ class Category
      */
     private $articles;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->childs = new ArrayCollection();
