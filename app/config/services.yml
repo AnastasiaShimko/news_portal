@@ -42,6 +42,7 @@ services:
             $twig: '@twig'
             $adminEmail: '%mailer_user%'
 
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

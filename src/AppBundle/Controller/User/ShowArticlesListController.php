@@ -11,8 +11,10 @@ namespace AppBundle\Controller\User;
 
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\UserParameters;
 use Doctrine\ORM\EntityManager;
 
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,8 +28,8 @@ class ShowArticlesListController extends Controller
     public function showAllAction(EntityManager $em, Request $request)
     {
         $repository = $em->getRepository(Article::class);
-        $query = $repository->createQueryBuilder('a')
-        ->orderBy('a.date', 'ASC');
+        $query = $repository->createQueryBuilder('a');
+        $this->orderByParam($query);
         return $this->renderPaginator($query, $request);
     }
 
@@ -38,13 +40,15 @@ class ShowArticlesListController extends Controller
     {
         $repository = $em->getRepository(Article::class);
         $query = $repository->createQueryBuilder('a');
-        $category = $em->getRepository(Category::class)->find($id);
-        $query->where('a.category = '.$category->getId());
-        $categories = $this->getSubCategories($category);
-        foreach ($categories as $idCat){
-            $query->orWhere('a.category = '.$idCat);
-        }
-        $query->orderBy('a.date', 'ASC');
+        $search = $request->request->get("find");
+        //$search = $this->divSearchString('123');
+        //foreach ($search as $part){
+            //$sub = ' LIKE "%'.$part.'%" ';
+        $query->where('a.name LIKE "%12%"')
+            ->orWhere('a.author LIKE "%12%"')
+            ->orWhere('a.annotation LIKE "%12%"');
+        //}
+        $this->orderByParam($query);
         return $this->renderPaginator($query, $request);
     }
 
@@ -55,17 +59,31 @@ class ShowArticlesListController extends Controller
     {
         $repository = $em->getRepository(Article::class);
         $query = $repository->createQueryBuilder('a');
+        $this->whereCategory($query, $em, $id);
+        $this->orderByParam($query);
+        return $this->renderPaginator($query, $request);
+    }
+
+    public function whereCategory(QueryBuilder $query, EntityManager $em, $id){
         $category = $em->getRepository(Category::class)->find($id);
         $query->where('a.category = '.$category->getId());
         $categories = $this->getSubCategories($category);
         foreach ($categories as $idCat){
             $query->orWhere('a.category = '.$idCat);
         }
-        $query->orderBy('a.date', 'ASC');
-        return $this->renderPaginator($query, $request);
     }
 
+    public function orderByParam(QueryBuilder $query){
+        $query->orderBy('a.'.$this->getUser()->getParameters()->getOrderBy(), 'DESC');
+    }
 
+    private function divSearchString(string $find){
+        $parts = explode(",", $find);
+        foreach ($parts as $part){
+            trim($part);
+        }
+        return $parts;
+    }
 
     private function getSubCategories(Category $category){
         $categories = array();
@@ -85,7 +103,7 @@ class ShowArticlesListController extends Controller
        $pagination = $paginator->paginate(
            $query,
            $request->query->getInt('page', 1),
-           5
+           $this->getUser()->getParameters()->getArticleCount()
        );
        return $this->render('main/list.html.twig', array('pagination' => $pagination));
    }

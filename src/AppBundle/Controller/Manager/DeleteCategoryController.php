@@ -25,7 +25,7 @@ class DeleteCategoryController extends Controller
     public function registerAction($id, Request $request, EntityManager $em)
     {
 
-        if ($this->deleteCategory($em, $id)) {
+        if ($this->deleteCategory($id, $em)) {
             return $this->redirectToRoute('main');
         }
         return $this->render(

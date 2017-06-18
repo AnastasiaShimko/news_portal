@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use AppBundle\Entity\UserParameters;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,11 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BasicUser implements AdvancedUserInterface, \Serializable
 {
-    public function __construct()
-    {
-        $this->role = 0;
-    }
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -42,6 +39,13 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="boolean")
      */
     protected $notification;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="UserParameters")
+     * @ORM\JoinColumn(name="parameters_id", referencedColumnName="id")
+     */
+    private $parameters;
 
     /**
      * @ORM\Column(type="integer")
@@ -89,6 +93,7 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
             $this->password,
             $this->notification,
             $this->role,
+            $this->parameters
             // $this->salt,
         ));
     }
@@ -104,6 +109,7 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
             $this->password,
             $this->notification,
             $this->role,
+            $this->parameters
             // $this->salt
             ) = unserialize($serialized);
     }
@@ -155,5 +161,29 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
     public function isEnabled()
     {
         return self::isValidUser($this);
+    }
+
+    /**
+     * Set parameters
+     *
+     * @param UserParameters $parameters
+     *
+     * @return User
+     */
+    public function setParameters(\AppBundle\Entity\UserParameters $parameters = null)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Get parameters
+     *
+     * @return UserParameters
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 }

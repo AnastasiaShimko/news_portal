@@ -8,6 +8,7 @@ use AppBundle\Entity\BasicUser;
 use AppBundle\Entity\ChangedUser;
 use AppBundle\Entity\RegisteredUser;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserParameters;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -25,7 +26,11 @@ class UserProvider
     }
 
     public function createUser(User $user){
+        $user->setRole('ROLE_NOT_CONFIRMED');
+        $parameters = new UserParameters();
+        $user->setParameters($parameters);
         $this->codePassword($user, $user->getPassword());
+        $this->entityManager->persist($parameters);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }

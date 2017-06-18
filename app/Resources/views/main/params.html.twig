@@ -1,0 +1,21 @@
+<form action="{{ path('parameter') }}" method="post">
+    <div>
+    <label for="orderBy">OrderBy</label>
+    <select name="orderBy" id="orderBy">
+        <option value="date" {% if app.user.parameters.orderBy == 'date'  %} selected{% endif %}>Date</option>
+        <option value="visitorCount" {% if app.user.parameters.orderBy == 'visitorCount'  %}
+        selected{% endif %}>Visitors</option>
+    </select>
+    </div>
+    <div>
+        <label for="articleCount">Articles on one list</label>
+        <select name="articleCount" id="articleCount" >
+            <option value="5" {% if app.user.parameters.articleCount == 5  %} selected{% endif %}>5</option>
+            <option value="10" {% if app.user.parameters.articleCount == 10  %} selected{% endif %}>10</option>
+            <option value="20" {% if app.user.parameters.articleCount == 20  %} selected{% endif %}>20</option>
+            <option value="30" {% if app.user.parameters.articleCount == 30  %} selected{% endif %}>30</option>
+            <option value="40" {% if app.user.parameters.articleCount == 40  %} selected{% endif %}>40</option>
+        </select>
+    </div>
+    <button type="submit">Set</button>
+</form>

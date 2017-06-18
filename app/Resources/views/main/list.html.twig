@@ -8,6 +8,8 @@
         <th>{{ knp_pagination_sortable(pagination, 'Name', 'a.name') }}</th>
         <th>{{ knp_pagination_sortable(pagination, 'Author', 'a.author')}}</th>
         <th>Annotation</th>
+        <th>Date</th>
+
     </tr>
 
     {# table body #}
@@ -16,6 +18,7 @@
             <td>{{ article.name }}</td>
             <td>{{ article.author}}</td>
             <td>{{ article.annotation }}</td>
+            <td>{{ article.date |date('Y-m-d') }}</td>
         </tr>
     {% endfor %}
 </table>
