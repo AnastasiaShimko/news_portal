@@ -1,17 +1,17 @@
-form {
+#articles form {
     margin: auto;
     padding: 0 2% 0 2%;
 }
-form div {
+#articles form div {
     clear: both;
     text-align: right;
 }
-form label {
+#articles form label {
     float: left;
     margin: 2%;
     font-size:1em;
 }
-form input, textarea {
+#articles form input, textarea {
     margin: 1%;
     height: auto;
     width: 70%;
@@ -23,7 +23,7 @@ h1 {
     text-align: center;
     margin-top: 4%;
 }
-button {
+#articles button {
     margin-left: 30%;
     margin-top: 5%;
     -webkit-border-radius: 11px;

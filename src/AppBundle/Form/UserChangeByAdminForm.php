@@ -16,12 +16,12 @@ class UserChangeByAdminForm extends AbstractType
         $builder->add('roles', CollectionType::class, array(
             'entry_type'   => ChoiceType::class,
             'entry_options'  => array(
-                'label'=>' ',
+                'label'=>'user_role',
                 'choices'  => array(
-                    'Admin' => 'ROLE_ADMIN',
-                    'Manager'     => 'ROLE_MANAGER',
-                    'User'    => 'ROLE_USER',
-                    'Delete Account'    => 'ROLE_DELETED',
+                    'admin' => 'ROLE_ADMIN',
+                    'manager'     => 'ROLE_MANAGER',
+                    'user'    => 'ROLE_USER',
+                    'delete_account'    => 'ROLE_DELETED',
                 ),
             ),
         ));
