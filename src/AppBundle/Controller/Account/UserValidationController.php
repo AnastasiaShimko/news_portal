@@ -19,9 +19,15 @@ class UserValidationController extends Controller
         $user = $this->getUserByConfirmId($id);
         if ($user) {
             $this->container->get(UserProvider::class)->changeRole($user, 'ROLE_USER');
-            return $this->redirectToRoute('login');
+            return $this->render(
+                'user/confirm.html.twig',
+                array('label' => 'You successfully confirm your registration. You can log in now.')
+            );
         }
-        return $this->redirectToRoute('registration');
+        return $this->render(
+            'user/confirm.html.twig',
+            array('label' => 'Sorry but you have a wrong linc.')
+        );
     }
 
 

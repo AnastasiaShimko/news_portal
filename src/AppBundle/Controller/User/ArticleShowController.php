@@ -21,6 +21,9 @@ class ArticleShowController extends Controller
     {
         $repos = $em->getRepository('AppBundle:Article');
         $article = $repos->find($id);
+
+        $article->increaseVisitorCount();
+        $em->flush();
         return $this->render('main/show_article.html.twig', array(
                 'article' => $article,
             )

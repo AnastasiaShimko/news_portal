@@ -20,6 +20,7 @@ class Article
      */
     private $id;
 
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -66,6 +67,10 @@ class Article
     {
         $this->visitorCount = 0;
         $this->fullText = new ArticleFullText();
+    }
+
+    public function increaseVisitorCount(){
+        $this->visitorCount++;
     }
 
     public function getText()

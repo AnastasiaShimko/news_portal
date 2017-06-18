@@ -23,7 +23,10 @@ class RegistrationController extends Controller
         $form = $this->createRegistrationForm($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createUser();
-            return $this->redirectToRoute('login');
+            return $this->render(
+                'user/confirm.html.twig',
+                array('label' => 'You Registered successfully. You need to confirm registration. Confirm mail was sent to your email address.')
+            );//$this->redirectToRoute('login');
         }
         return $this->render(
             'user/register.html.twig',

@@ -20,7 +20,10 @@ class UserChangePasswordController extends Controller
     {
         $email = $this->getEmailFromForm($request);
         if ($email && $this->changePasswordIfValidEmail($email)) {
-            return $this->redirectToRoute('login');
+            return $this->render(
+                'user/confirm.html.twig',
+                array('label' => 'You successfully changed your password. New password was sent to your email address by mail.')
+            );
         }
         return $this->render('user/email.html.twig');
     }
