@@ -1,3 +1,7 @@
-{{ label }}
-
-Go to login page: <a href="/login" id="tologinform">Login...</a>
+{% extends 'user/register.html.twig' %}
+{% block body %}
+    <form>
+        <label>{{ label }}</label>
+        <p>Go to login page: <a href="/login" id="tologinform">Login...</a></p>
+    </form>
+{% endblock %}
