@@ -1,21 +1,13 @@
 <?php
+
 namespace AppBundle\Form;
 
-use AppBundle\Entity\RegisteredUser;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Roules;
+use AppBundle\Entity\Roles;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserChangeByAdminForm extends AbstractType
 {
@@ -38,7 +30,7 @@ class UserChangeByAdminForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Roules::class,
+            'data_class' => Roles::class,
         ));
     }
 }

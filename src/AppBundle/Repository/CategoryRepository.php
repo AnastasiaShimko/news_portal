@@ -2,18 +2,18 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\AppBundle;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
 use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    public function getCategoryRoot(){
+    public function getCategoryRoot()
+    {
         return $this->find(1);
     }
 
-    public function deleteCategory($id)
+    public function deleteCategory($id):bool
     {
         if ($id != 1) {
             $category = $this->find($id);
@@ -28,7 +28,8 @@ class CategoryRepository extends EntityRepository
         return false;
     }
 
-    private function changeArticleCategory(Category $category){
+    private function changeArticleCategory(Category $category)
+    {
         $repository = $this->_em->getRepository(Article::class);
         $articles = $repository->findBy(array('category'=>$category->getId()));
         foreach ($articles as $article){
@@ -36,7 +37,8 @@ class CategoryRepository extends EntityRepository
         }
     }
 
-    private function moveChildCategory(Category $category){
+    private function moveChildCategory(Category $category)
+    {
         $parent = $category->getParent();
         $parent->removeChild($category);
         foreach ($category->getChilds() as $child){

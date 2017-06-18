@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 13.06.2017
- * Time: 10:37
- */
 
 namespace AppBundle\Entity;
 
@@ -28,37 +22,17 @@ class ArticleFullText
      */
     private $fullText;
 
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    /**
-     * Set fullText
-     *
-     * @param string $fullText
-     *
-     * @return ArticleFullText
-     */
-    public function setFullText($fullText)
+    public function setFullText(string $fullText)
     {
         $this->fullText = $fullText;
-
         return $this;
     }
 
-    /**
-     * Get fullText
-     *
-     * @return string
-     */
     public function getFullText()
     {
         return $this->fullText;

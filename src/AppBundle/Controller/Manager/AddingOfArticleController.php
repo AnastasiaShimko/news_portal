@@ -29,14 +29,16 @@ class AddingOfArticleController extends Controller
         );
     }
 
-    private function createAddingForm(Request $request){
+    private function createAddingForm(Request $request):Form
+    {
         $this->article = new Article();
         $form = $this->createForm(ArticleAddChangeForm::class, $this->article);
         $form->handleRequest($request);
         return $form;
     }
 
-    private function tryAddArticle(Form $form, EntityManager $em){
+    private function tryAddArticle(Form $form, EntityManager $em):bool
+    {
         if ($form->isSubmitted() && $form->isValid()) {
             $repository = $em->getRepository(Article::class);
             $repository->addArticle($this->article);

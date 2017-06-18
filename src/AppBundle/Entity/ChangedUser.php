@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,25 +11,16 @@ class ChangedUser extends BasicUser
      */
     private $oldPassword;
 
-    /**
-     * @param int $id
-     */
     public function setId(int $id)
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string
-     */
-    public function getOldPassword()
+    public function getOldPassword():string
     {
         return $this->oldPassword;
     }
 
-    /**
-     * @param string $oldPassword
-     */
     public function setOldPassword(string $oldPassword)
     {
         $this->oldPassword = $oldPassword;

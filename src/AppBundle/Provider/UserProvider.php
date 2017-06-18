@@ -2,11 +2,8 @@
 
 namespace AppBundle\Provider;
 
-
 use AppBundle\Constants\RoleConstants;
-use AppBundle\Entity\BasicUser;
 use AppBundle\Entity\ChangedUser;
-use AppBundle\Entity\RegisteredUser;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserParameters;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +22,8 @@ class UserProvider
         $this->repository = $entityManager->getRepository('AppBundle:User');
     }
 
-    public function createUser(User $user){
+    public function createUser(User $user)
+    {
         $user->setRole('ROLE_NOT_CONFIRMED');
         $parameters = new UserParameters();
         $user->setParameters($parameters);
@@ -35,15 +33,18 @@ class UserProvider
         $this->entityManager->flush();
     }
 
-    public function getUser(string $email){
-        return  $this->repository->findOneBy(array('email' => $email));
+    public function getUser(string $email)
+    {
+        return $this->repository->findOneBy(array('email' => $email));
     }
 
-    public function getAllUsersByRole(string $role){
+    public function getAllUsersByRole(string $role)
+    {
         return $this->repository->findBy(array('role' => RoleConstants::$NUMBER_FROM_ROLES[$role]));
     }
 
-    public function checkPasswordChangeUser(ChangedUser $changedUser, User $user){
+    public function checkPasswordChangeUser(ChangedUser $changedUser, User $user):bool
+    {
         if($this->passwordEncoder->isPasswordValid($user, $changedUser->getOldPassword())){
             $user->setNotification($changedUser->getNotification());
             if($changedUser->getPassword()) {
@@ -55,10 +56,17 @@ class UserProvider
         return false;
     }
 
-    public function changeRole(User $user, string $role){
+    public function changeRole(User $user, string $role)
+    {
         if (in_array($role,  RoleConstants::$ROLES_FROM_NUMBER) && $user->getRole()!= $role){
-            $user->setRole($role);
-            $this->entityManager->flush();
+            if($role=='ROLE_DELETED'){
+                $this->entityManager->remove($user);
+                $this->entityManager->flush();
+            }
+            else {
+                $user->setRole($role);
+                $this->entityManager->flush();
+            }
         }
     }
 

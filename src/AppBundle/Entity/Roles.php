@@ -2,8 +2,7 @@
 
 namespace AppBundle\Entity;
 
-
-class Roules
+class Roles
 {
     private $roles;
 
@@ -11,18 +10,12 @@ class Roules
         $this->roles = array();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRoles()
+    public function getRoles():array
     {
         return $this->roles;
     }
 
-    /**
-     * @param mixed $roles
-     */
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
     }
@@ -32,7 +25,7 @@ class Roules
         $this->roles[$id] = $role;
     }
 
-    public function getRole(int $id)
+    public function getRole(int $id):string
     {
         return $this->roles[$id];
     }

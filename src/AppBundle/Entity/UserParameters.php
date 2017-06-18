@@ -1,21 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 18.06.2017
- * Time: 7:32
- */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Table(name="user_params")
  * @ORM\Entity
  */
 class UserParameters
 {
-
     public function __construct()
     {
         $this->articleCount = 10;
@@ -39,60 +33,29 @@ class UserParameters
      */
     private $orderBy;
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    /**
-     * Set articleCount
-     *
-     * @param integer $articleCount
-     *
-     * @return UserParameters
-     */
-    public function setArticleCount($articleCount)
+    public function setArticleCount(int $articleCount)
     {
         $this->articleCount = $articleCount;
-
         return $this;
     }
 
-    /**
-     * Get articleCount
-     *
-     * @return integer
-     */
-    public function getArticleCount()
+    public function getArticleCount():int
     {
         return $this->articleCount;
     }
 
-    /**
-     * Set orderBy
-     *
-     * @param string $orderBy
-     *
-     * @return UserParameters
-     */
-    public function setOrderBy($orderBy)
+    public function setOrderBy(string $orderBy)
     {
         $this->orderBy = $orderBy;
-
         return $this;
     }
 
-    /**
-     * Get orderBy
-     *
-     * @return string
-     */
-    public function getOrderBy()
+    public function getOrderBy():string
     {
         return $this->orderBy;
     }

@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use AppBundle\Entity\UserParameters;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -52,28 +51,17 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
      */
     protected $role;
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername():string
     {
         return $this->email;
     }
 
-    /**
-     * @return null
-     */
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
         return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getRoles()
+    public function getRoles():array
     {
         return array($this->getRole());
     }
@@ -82,9 +70,6 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
     {
     }
 
-    /**
-     * @see \Serializable::serialize()
-     */
     public function serialize()
     {
         return serialize(array(
@@ -98,9 +83,6 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
         ));
     }
 
-    /**
-     * @see \Serializable::unserialize()
-     */
     public function unserialize($serialized)
     {
         list (
@@ -110,79 +92,42 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
             $this->notification,
             $this->role,
             $this->parameters
-            // $this->salt
             ) = unserialize($serialized);
     }
 
-    /**
-     * @param User $user
-     * @return bool
-     */
-    public static function isValidUser(User $user){
+    public static function isValidUser(User $user):bool
+    {
         return $user && $user->getRole()!= 'ROLE_NOT_CONFIRMED'
             && $user->getRole()!='ROLE_DELETED';
     }
 
-    /**
-     * Checks whether the user's account has expired.
-     * @return bool true if the user's account is non expired, false otherwise
-     * @see AccountExpiredException
-     */
-    public function isAccountNonExpired()
+    public function isAccountNonExpired():bool
     {
         return true;
     }
 
-    /**
-     * Checks whether the user is locked.
-     * @return bool true if the user is not locked, false otherwise
-     * @see LockedException
-     */
-    public function isAccountNonLocked()
+    public function isAccountNonLocked():bool
     {
         return true;
     }
 
-    /**
-     * Checks whether the user's credentials (password) has expired.
-     * @return bool true if the user's credentials are non expired, false otherwise
-     * @see CredentialsExpiredException
-     */
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired():bool
     {
         return true;
     }
 
-    /**
-     * Checks whether the user is enabled.
-     * @return bool true if the user is enabled, false otherwise
-     * @see DisabledException
-     */
-    public function isEnabled()
+    public function isEnabled():bool
     {
         return self::isValidUser($this);
     }
 
-    /**
-     * Set parameters
-     *
-     * @param UserParameters $parameters
-     *
-     * @return User
-     */
-    public function setParameters(\AppBundle\Entity\UserParameters $parameters = null)
+    public function setParameters(UserParameters $parameters = null)
     {
         $this->parameters = $parameters;
-
         return $this;
     }
 
-    /**
-     * Get parameters
-     *
-     * @return UserParameters
-     */
-    public function getParameters()
+    public function getParameters():UserParameters
     {
         return $this->parameters;
     }

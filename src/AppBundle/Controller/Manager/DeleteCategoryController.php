@@ -1,20 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 15.06.2017
- * Time: 8:20
- */
 
 namespace AppBundle\Controller\Manager;
 
-
 use AppBundle\Entity\Category;
-use AppBundle\Form\CategoryAddForm;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class DeleteCategoryController extends Controller
@@ -24,7 +15,6 @@ class DeleteCategoryController extends Controller
      */
     public function registerAction($id, Request $request, EntityManager $em)
     {
-
         if ($this->deleteCategory($id, $em)) {
             return $this->redirectToRoute('main');
         }
@@ -35,8 +25,9 @@ class DeleteCategoryController extends Controller
 
     }
 
-    private function deleteCategory($id, EntityManager $em){
+    private function deleteCategory($id, EntityManager $em):bool
+    {
         $repository = $em->getRepository(Category::class);
-        $repository->deleteCategory($id);
+        return $repository->deleteCategory($id);
     }
 }

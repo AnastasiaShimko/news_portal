@@ -27,7 +27,7 @@ class RegistrationController extends Controller
             return $this->render(
                 'user/confirm.html.twig',
                 array('label' => 'You Registered successfully. You need to confirm registration. Confirm mail was sent to your email address.')
-            );//$this->redirectToRoute('login');
+            );
         }
         return $this->render(
             'user/register.html.twig',
@@ -35,7 +35,8 @@ class RegistrationController extends Controller
         );
     }
 
-    private function createRegistrationForm(Request $request){
+    private function createRegistrationForm(Request $request):Form
+    {
         if (!$this->user){
             $this->user = new User();
         }
@@ -44,16 +45,18 @@ class RegistrationController extends Controller
         return $form;
     }
 
-    private function createUser(){
+    private function createUser()
+    {
         $userProvider = $this->container->get(UserProvider::class);
         $userProvider->createUser($this->user);
-        $this->sendRegistrationMail();
+        $this->sendRegistrationMail($this->user);
     }
 
-    private function sendRegistrationMail(){
+    private function sendRegistrationMail(User $user)
+    {
         $mailer = $this->container->get(UsersMailer::class);
         $info =  array(
-            'id' => md5($this->user->getId().$this->user->getPassword().$this->user->getEmail())
+            'id' => md5($user->getId().$user->getPassword().$user->getEmail())
         );
         $mailer->sendMessage('Confirm Registration', 'fea.ortenore@gmail.com',
             'user/registration.html.twig', $info);#$user->getEmail()
