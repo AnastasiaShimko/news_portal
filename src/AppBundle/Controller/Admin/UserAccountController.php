@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Roules;
 use AppBundle\Form\UserChangeByAdminForm;
 use AppBundle\Provider\UserProvider;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,7 @@ class UserAccountController extends Controller
     /**
      * @Route("/accounts", name="account_control")
      */
-    public function controlAction(Request $request){
+    public function controlAction(Request $request, EntityManager $em){
         $users= $this->getAllActiveUsers();
         $form = $this->createUserChangeForm($users, $request);
         if ($form->isValid()){
