@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\RegistrationForm;
 use AppBundle\Provider\UserProvider;
 use AppBundle\Service\UsersMailer;
+use Composer\DependencyResolver\Transaction;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;

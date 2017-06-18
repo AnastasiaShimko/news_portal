@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Registration{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
 {% endblock %}
 {% block body %}
-    <h1>Registration</h1>
+    <h1>{{ 'registration' | trans }}</h1>
     {{ form_start(form) }}
     {{ form_row(form.email) }}
     {{ form_row(form.password.first) }}
@@ -14,9 +13,9 @@
     <div class="notify">
         {{ form_row(form.notification) }}
     </div>
-    <button type="submit">Register</button>
+    <button type="submit">{{ 'registration' | trans }}</button>
     <br>
-    <p>Already registered?</p>
-    <a href="/login" id="tologinform">Login...</a>
+    <p>{{ 'already_registered' | trans }}</p>
+    <a href="/login" id="tologinform">{{ 'login' | trans }}...</a>
     {{ form_end(form) }}
 {% endblock %}

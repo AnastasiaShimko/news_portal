@@ -1,6 +1,6 @@
 <form action="{{ path('parameter') }}" method="post">
     <div>
-    <label for="orderBy">OrderBy</label>
+    <label for="orderBy">Order By</label>
     <select name="orderBy" id="orderBy">
         <option value="date" {% if app.user.parameters.orderBy == 'date'  %} selected{% endif %}>Date</option>
         <option value="visitorCount" {% if app.user.parameters.orderBy == 'visitorCount'  %}

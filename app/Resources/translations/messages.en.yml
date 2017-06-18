@@ -1,0 +1,9 @@
+#messages.en.yml
+
+registration: Registration!
+email: Email
+password: Password
+repeat_password: Repeat password
+do_you_want_to_receive_top_news_every_week: Do you want to receive top news every week?
+already_registered: Already registered?
+login: Login

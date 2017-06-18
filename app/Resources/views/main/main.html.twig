@@ -4,6 +4,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/rightsidebar.css') }}" />
         {% block additionalcss %}
         {% endblock %}
 {% endblock %}
@@ -14,7 +15,7 @@
         <div>
             {% block rightsidebar %}
             <div class="content" id="rightsidebar">
-                Settings for articles view.
+                {% include 'main/params.html.twig' %}
             </div>
             {% endblock %}
             {% block content %}
@@ -24,9 +25,7 @@
              </div>
             {% endblock %}
             {% block leftsidebar %}
-            <div class="content" id="leftsidebar">
-                Categories listing.
-            </div>
+                {% include 'main/category_tree.html.twig' %}
             {% endblock %}
         </div>
 {% endblock %}
