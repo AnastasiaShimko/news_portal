@@ -17,6 +17,7 @@ h3{
     width: 90%;
     margin: auto;
     padding: 1%;
+    word-wrap: break-word;
 }
 #date{
     margin-right: 10%;

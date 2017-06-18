@@ -19,7 +19,8 @@ body {
 }
 .content{
     float: right;
-    height: 100vh;
+    min-height: 100vh;
+    padding-bottom: 2%;
 }
 .content{
     margin-top: 1%;
