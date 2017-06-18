@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,128 +47,62 @@ class Category
         $this->articles = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Category
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     *
-     * @return Category
-     */
     public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
-
         return $this;
     }
 
-    /**
-     * Get parent
-     *
-     * @return Category
-     */
-    public function getParent()
+    public function getParent():Category
     {
         return $this->parent;
     }
 
-    /**
-     * Add child
-     *
-     * @param Category $child
-     *
-     * @return Category
-     */
     public function addChild(Category $child)
     {
         $this->childs[] = $child;
-
         return $this;
     }
 
-    /**
-     * Remove child
-     *
-     * @param Category $child
-     */
     public function removeChild(Category $child)
     {
         $this->childs->removeElement($child);
     }
 
-    /**
-     * Get childs
-     *
-     * @return Collection
-     */
-    public function getChilds()
+    public function getChilds():ArrayCollection
     {
         return $this->childs;
     }
 
-    /**
-     * Add article
-     *
-     * @param Article $article
-     *
-     * @return Category
-     */
     public function addArticle(Article $article)
     {
         $this->articles[] = $article;
-
         return $this;
     }
 
-    /**
-     * Remove article
-     *
-     * @param Article $article
-     */
     public function removeArticle(Article $article)
     {
         $this->articles->removeElement($article);
     }
 
-    /**
-     * Get articles
-     *
-     * @return Collection
-     */
-    public function getArticles()
+    public function getArticles():ArrayCollection
     {
         return $this->articles;
     }

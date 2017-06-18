@@ -1,20 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 17.06.2017
- * Time: 10:07
- */
 
 namespace AppBundle\Controller\User;
 
-
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
-use AppBundle\Entity\UserParameters;
 use Doctrine\ORM\EntityManager;
-
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,7 +38,8 @@ class ShowArticlesListController extends Controller
         }
     }
 
-    private function searchByPart(QueryBuilder $query, string $search){
+    private function searchByPart(QueryBuilder $query, string $search)
+    {
         $query->andWhere('a.name LIKE :search');
         $query->orWhere('a.author LIKE :search');
         $query->orWhere('a.annotation LIKE :search');
@@ -68,7 +59,8 @@ class ShowArticlesListController extends Controller
         return $this->renderPaginator($query, $request);
     }
 
-    public function whereCategory(QueryBuilder $query, EntityManager $em, $id){
+    public function whereCategory(QueryBuilder $query, EntityManager $em, $id)
+    {
         $category = $em->getRepository(Category::class)->find($id);
         $query->where('a.category = '.$category->getId());
         $categories = $this->getSubCategories($category);
@@ -77,7 +69,8 @@ class ShowArticlesListController extends Controller
         }
     }
 
-    public function orderByParam(QueryBuilder $query){
+    public function orderByParam(QueryBuilder $query)
+    {
         $query->orderBy('a.'.$this->getUser()->getParameters()->getOrderBy(), 'DESC');
     }
 
@@ -89,7 +82,8 @@ class ShowArticlesListController extends Controller
         return $parts;
     }
 
-    private function getSubCategories(Category $category){
+    private function getSubCategories(Category $category):array
+    {
         $categories = array();
         $sub = array($category);
         while (sizeof($sub)!=0){
@@ -101,8 +95,8 @@ class ShowArticlesListController extends Controller
         return $categories;
     }
 
-
-   private function renderPaginator(QueryBuilder $query, Request $request){
+   private function renderPaginator(QueryBuilder $query, Request $request)
+   {
        $paginator  = $this->get('knp_paginator');
        $pagination = $paginator->paginate(
            $query,

@@ -34,7 +34,7 @@ class Article
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank()
      */
     private $author;
@@ -45,7 +45,7 @@ class Article
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $annotation;
@@ -71,11 +71,6 @@ class Article
      */
     private $similarArticles;
 
-
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->similarArticles = new ArrayCollection();
@@ -97,193 +92,96 @@ class Article
         $this->fullText->setFullText($text);
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    /**
-     * Set visiters
-     *
-     * @param integer $visitorCount
-     *
-     * @return Article
-     */
-    public function setVisitorCount($visitorCount)
+    public function setVisitorCount(int $visitorCount)
     {
         $this->visitorCount = $visitorCount;
 
         return $this;
     }
 
-    /**
-     * Get visiters
-     *
-     * @return integer
-     */
-    public function getVisitorCount()
+    public function getVisitorCount():int
     {
         return $this->visitorCount;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Article
-     */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set author
-     *
-     * @param string $author
-     *
-     * @return Article
-     */
-    public function setAuthor($author)
+    public function setAuthor(string $author)
     {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * Get author
-     *
-     * @return string
-     */
     public function getAuthor()
     {
         return $this->author;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Article
-     */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate():\DateTime
     {
         return $this->date;
     }
 
-    /**
-     * Set annotation
-     *
-     * @param string $annotation
-     *
-     * @return Article
-     */
-    public function setAnnotation($annotation)
+    public function setAnnotation(string $annotation)
     {
         $this->annotation = $annotation;
 
         return $this;
     }
 
-    /**
-     * Get annotation
-     *
-     * @return string
-     */
     public function getAnnotation()
     {
         return $this->annotation;
     }
 
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Article
-     */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
         return $this;
     }
 
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\Category
-     */
     public function getCategory()
     {
         return $this->category;
     }
 
-    /**
-     * Set fullText
-     *
-     * @param \AppBundle\Entity\ArticleFullText $fullText
-     *
-     * @return Article
-     */
-    public function setFullText(\AppBundle\Entity\ArticleFullText $fullText = null)
+    public function setFullText(ArticleFullText $fullText = null)
     {
         $this->fullText = $fullText;
 
         return $this;
     }
 
-    /**
-     * Get fullText
-     *
-     * @return \AppBundle\Entity\ArticleFullText
-     */
     public function getFullText()
     {
         return $this->fullText;
     }
 
-
-    /**
-     * Add similarArticle
-     *
-     * @param \AppBundle\Entity\Article $similarArticle
-     *
-     * @return Article
-     */
-    public function addSimilarArticle(\AppBundle\Entity\Article $similarArticle)
+    public function addSimilarArticle(Article $similarArticle)
     {
         if($this->similarArticles->count()<5) {
             $this->similarArticles[] = $similarArticle;
@@ -291,22 +189,12 @@ class Article
         return $this;
     }
 
-    /**
-     * Remove similarArticle
-     *
-     * @param \AppBundle\Entity\Article $similarArticle
-     */
-    public function removeSimilarArticle(\AppBundle\Entity\Article $similarArticle)
+    public function removeSimilarArticle(Article $similarArticle)
     {
         $this->similarArticles->removeElement($similarArticle);
     }
 
-    /**
-     * Get similarArticles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSimilarArticles()
+    public function getSimilarArticles():ArrayCollection
     {
         return $this->similarArticles;
     }

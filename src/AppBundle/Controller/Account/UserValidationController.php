@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Account;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Provider\UserProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,8 +29,8 @@ class UserValidationController extends Controller
         );
     }
 
-
-    private function getUserByConfirmId($id){
+    private function getUserByConfirmId($id):User
+    {
         $user = null;
         foreach ($this->container->get(UserProvider::class)->getAllUsersByRole('ROLE_NOT_CONFIRMED') as $value){
             if($this->checkConfirmId($value, $id)){
@@ -41,8 +40,8 @@ class UserValidationController extends Controller
         return $user;
     }
 
-    private function checkConfirmId(User $user, $id){
+    private function checkConfirmId(User $user, $id):string
+    {
         return md5($user->getId().$user->getPassword().$user->getEmail())==$id;
     }
-
 }

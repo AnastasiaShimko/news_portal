@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserChangePasswordController extends Controller
 {
-
     /**
      * @Route("/password_change", name="password_change")
      */
@@ -28,7 +27,8 @@ class UserChangePasswordController extends Controller
         return $this->render('user/email.html.twig');
     }
 
-    private function changePasswordIfValidEmail(string $email){
+    private function changePasswordIfValidEmail(string $email):bool
+    {
         $user = $this->container->get(UserProvider::class)->getUser($email);
         if (User::isValidUser($user)){
             $this->generateChangePassword($user);
@@ -37,23 +37,26 @@ class UserChangePasswordController extends Controller
         return false;
     }
 
-    private function generateChangePassword(User $user){
+    private function generateChangePassword(User $user)
+    {
         $password = base64_encode(random_bytes(10));
         $this->container->get(UserProvider::class)->codePassword($user, $password);
         $this->sendChangePasswordMail($user->getEmail(), $password);
     }
 
 
-    private function sendChangePasswordMail(string $email, string $newPassword){
+    private function sendChangePasswordMail(string $email, string $newPassword)
+    {
         $mailer = $this->container->get(UsersMailer::class);
         $info = array('password' => $newPassword);
         $mailer->sendMessage('Password Change Email', 'fea.ortenore@gmail.com',
             'user/change.html.twig', $info);#$user->getEmail()
     }
 
-    private function getEmailFromForm(Request $request) {
-        if ( $request->getMethod() == Request::METHOD_POST ) {
-            return $request->get('email');
+    private function getEmailFromForm(Request $request):string
+    {
+        if ( $email = $request->get('email') ) {
+            return $email;
         }
         return null;
     }

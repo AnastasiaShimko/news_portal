@@ -1,8 +1,8 @@
 <?php
+
 namespace AppBundle\Form;
 
 use AppBundle\Entity\ChangedUser;
-use function PHPSTORM_META\type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -2,24 +2,24 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\Roules;
+use AppBundle\Entity\Roles;
 use AppBundle\Form\UserChangeByAdminForm;
 use AppBundle\Provider\UserProvider;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserAccountController extends Controller
 {
-
     private $roles;
 
     /**
      * @Route("/accounts", name="account_control")
      */
-    public function controlAction(Request $request, EntityManager $em){
+    public function controlAction(Request $request, EntityManager $em)
+    {
         $users= $this->getAllActiveUsers();
         $form = $this->createUserChangeForm($users, $request);
         if ($form->isValid()){
@@ -32,8 +32,9 @@ class UserAccountController extends Controller
         );
     }
 
-    private function createUserChangeForm(array $users, Request $request){
-        $this->roles = new Roules();
+    private function createUserChangeForm(array $users, Request $request):Form
+    {
+        $this->roles = new Roles();
         foreach ($users as $user){
             $this->roles->addRole($user->getId(), $user->getRole());
         }
@@ -42,13 +43,15 @@ class UserAccountController extends Controller
         return $form;
     }
 
-    public function changeUsersRole(array $users){
+    public function changeUsersRole(array $users)
+    {
         foreach ($users as $user){
             $this->container->get(UserProvider::class)->changeRole($user,  $this->roles->getRole($user->getId()));
         }
     }
 
-    private function getAllActiveUsers(){
+    private function getAllActiveUsers():array
+    {
         $userProvider = $this->container->get(UserProvider::class);
         return   array_merge(array_merge($userProvider->getAllUsersByRole('ROLE_USER'),
             $userProvider->getAllUsersByRole('ROLE_MANAGER')),

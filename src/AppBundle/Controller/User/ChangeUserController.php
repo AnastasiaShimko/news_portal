@@ -31,14 +31,15 @@ class ChangeUserController extends Controller
         );
     }
 
-    private function tryChangeUser(Form $form)
+    private function tryChangeUser(Form $form):bool
     {
         $userProvider = $this->container->get(UserProvider::class);
         return $form->isSubmitted() && $form->isValid() &&
             $userProvider->checkPasswordChangeUser($this->userInForm, $this->getUser());
     }
 
-    private function createChangeForm(Request $request){
+    private function createChangeForm(Request $request):Form
+    {
         $this->userInForm = new ChangedUser();
         $this->userInForm->setNotification($this->getUser()->getNotification());
         $form = $this->createForm(ChangeUserForm::class, $this->userInForm);

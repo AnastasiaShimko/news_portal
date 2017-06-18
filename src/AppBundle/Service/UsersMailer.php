@@ -5,7 +5,6 @@ namespace AppBundle\Service;
 
 class UsersMailer
 {
-
     private $mailer;
     private $twig;
     private $adminEmail;
@@ -17,13 +16,15 @@ class UsersMailer
         $this->adminEmail = $adminEmail;
     }
 
-    public function sendMessage(string $subject, string $addressTo, string $twigName, array $info){
+    public function sendMessage(string $subject, string $addressTo, string $twigName, array $info)
+    {
         $message = $this->createMessage($subject, $addressTo);#$addressTo
         $this->setBody($twigName, $info, $message);
         $this->mailer->send($message);
     }
 
-    private function setBody(string $twig, array $info, \Swift_Message $message){
+    private function setBody(string $twig, array $info, \Swift_Message $message)
+    {
         $message->setBody(
             $this->twig->render(
                 $twig,
@@ -33,7 +34,8 @@ class UsersMailer
         );
     }
 
-    private function createMessage(string $subject, string $addressTo){
+    private function createMessage(string $subject, string $addressTo):\Swift_Message
+    {
         $message = new \Swift_Message($subject);
         $message->setFrom($this->adminEmail);
         $message->setTo($addressTo);

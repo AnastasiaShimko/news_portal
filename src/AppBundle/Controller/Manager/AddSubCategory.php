@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 15.06.2017
- * Time: 8:20
- */
 
 namespace AppBundle\Controller\Manager;
 
@@ -35,7 +29,7 @@ class AddSubCategory extends Controller
         );
     }
 
-    private function createAddForm(Request $request, EntityManager $em, $id){
+    private function createAddForm(Request $request, EntityManager $em, $id):Form{
         $this->category = new Category();
         $this->category->setParent($em->getRepository(Category::class)->find($id));
         $form = $this->createForm(CategoryAddForm::class, $this->category);
@@ -43,7 +37,7 @@ class AddSubCategory extends Controller
         return $form;
     }
 
-    private function tryAddCategory(Form $form, EntityManager $em){
+    private function tryAddCategory(Form $form, EntityManager $em):bool{
         if ($form->isSubmitted() && $form->isValid()) {
             $repository = $em->getRepository(Category::class);
             $repository->addCategory($this->category);

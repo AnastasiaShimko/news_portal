@@ -1,16 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 18.06.2017
- * Time: 7:37
- */
 
 namespace AppBundle\Controller\User;
 
-
-use AppBundle\Entity\UserParameters;
-use AppBundle\Provider\UserProvider;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,12 +16,17 @@ class ParametersController extends Controller
     {
         $orderBy = $request->request->get('orderBy');
         $articleCount = $request->request->get('articleCount');
+        $this->changeParameters($orderBy, $articleCount, $em);
+        return $this->render('main/params.html.twig');
+    }
+
+    public function changeParameters(string $orderBy, int $articleCount, EntityManager $em)
+    {
         if($orderBy && $articleCount){
             $parameters = $this->getUser()->getParameters();
             $parameters->setOrderBy($orderBy);
             $parameters->setArticleCount($articleCount);
             $em->flush();
         }
-        return $this->render('main/params.html.twig');
     }
 }

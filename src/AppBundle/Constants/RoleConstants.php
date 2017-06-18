@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: RMV
- * Date: 11.06.2017
- * Time: 7:07
- */
 
 namespace AppBundle\Constants;
-
 
 class RoleConstants
 {

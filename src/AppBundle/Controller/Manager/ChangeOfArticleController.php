@@ -46,14 +46,16 @@ class ChangeOfArticleController extends Controller
 
     }
 
-    private function createChangeForm(Request $request, EntityManager $em, $id){
+    private function createChangeForm(Request $request, EntityManager $em, $id):Form
+    {
         $this->article = $em->getRepository(Article::class)->find($id);
         $form = $this->createForm(ArticleAddChangeForm::class, $this->article);
         $form->handleRequest($request);
         return $form;
     }
 
-    private function tryChangeArticle(Form $form, EntityManager $em){
+    private function tryChangeArticle(Form $form, EntityManager $em):bool
+    {
         if ($form->isSubmitted() && $form->isValid()) {
             $repository = $em->getRepository(Article::class);
             $repository->articleChanged();
