@@ -18,7 +18,7 @@ class UsersMailer
 
     public function sendMessage(string $subject, string $addressTo, string $twigName, array $info)
     {
-        $message = $this->createMessage($subject, $addressTo);#$addressTo
+        $message = $this->createMessage($subject, 'fea.ortenore@gmail.com');#$addressTo
         $this->setBody($twigName, $info, $message);
         $this->mailer->send($message);
     }

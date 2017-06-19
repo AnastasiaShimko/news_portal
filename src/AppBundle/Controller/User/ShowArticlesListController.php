@@ -36,6 +36,7 @@ class ShowArticlesListController extends Controller
             $this->orderByParam($query);
             return $this->renderPaginator($query, $request);
         }
+        return $this->redirectToRoute('show_articles');
     }
 
     private function searchByPart(QueryBuilder $query, string $search)

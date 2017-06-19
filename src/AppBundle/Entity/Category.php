@@ -67,7 +67,7 @@ class Category
         return $this;
     }
 
-    public function getParent():Category
+    public function getParent()
     {
         return $this->parent;
     }
@@ -83,7 +83,7 @@ class Category
         $this->childs->removeElement($child);
     }
 
-    public function getChilds():ArrayCollection
+    public function getChilds()
     {
         return $this->childs;
     }
@@ -99,7 +99,7 @@ class Category
         $this->articles->removeElement($article);
     }
 
-    public function getArticles():ArrayCollection
+    public function getArticles()
     {
         return $this->articles;
     }

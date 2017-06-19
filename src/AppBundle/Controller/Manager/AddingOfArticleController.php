@@ -17,7 +17,7 @@ class AddingOfArticleController extends Controller
     /**
      * @Route("/new_article", name="new_article")
      */
-    public function registerAction(Request $request, EntityManager $em)
+    public function addAction(Request $request, EntityManager $em)
     {
         $form = $this->createAddingForm($request);
         if ($this->tryAddArticle($form, $em)) {

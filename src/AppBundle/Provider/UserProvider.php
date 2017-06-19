@@ -22,6 +22,16 @@ class UserProvider
         $this->repository = $entityManager->getRepository('AppBundle:User');
     }
 
+    public function getAllNotifiedActiveUsers():array
+    {
+        return $this->repository->findBy(array('role' => array(1,2,3), 'notification' => true));
+    }
+
+    public function changeUser()
+    {
+        $this->entityManager->flush();
+    }
+
     public function createUser(User $user)
     {
         $user->setRole('ROLE_NOT_CONFIRMED');

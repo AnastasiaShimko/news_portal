@@ -12,15 +12,25 @@ class DeleteArticleController extends Controller
     /**
      * @Route("/delete_article/{id}", name="delete_article")
      */
-    public function registerAction($id, EntityManager $em)
+    public function deleteAction($id, EntityManager $em)
     {
-        $this->deleteArticle($em, $id);
-        return $this->redirectToRoute('main');
+        if($this->deleteArticle($em, $id)) {
+            return $this->redirectToRoute('main');
+        }
+        return $this->render(
+            'error/error.html.twig',
+            array('label'=>"Can't find article with id :".$id)
+        );
     }
 
     private function deleteArticle(EntityManager $em, int $id):bool
     {
         $repository = $em->getRepository(Article::class);
-        return $repository->delArticle($repository->find($id));
+        $article = $repository->find($id);
+        if($article) {
+            $repository->delArticle($repository->find($id));
+            return true;
+        }
+        return false;
     }
 }

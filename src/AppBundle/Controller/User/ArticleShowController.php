@@ -11,10 +11,16 @@ class ArticleShowController extends Controller
     /**
      * @Route("/article/{id}", name="article")
      */
-    public function loginAction($id, EntityManager $em)
+    public function showAction($id, EntityManager $em)
     {
         $repos = $em->getRepository('AppBundle:Article');
         $article = $repos->find($id);
+        if(!$article){
+            return $this->render(
+                'error/error.html.twig',
+                array('label'=>"Can't find article with id :".$id)
+            );
+        }
         $article->increaseVisitorCount();
         $em->flush();
         return $this->render('main/show_article.html.twig', array(

@@ -41,19 +41,19 @@ class UserChangePasswordController extends Controller
     {
         $password = base64_encode(random_bytes(10));
         $this->container->get(UserProvider::class)->codePassword($user, $password);
+        $this->container->get(UserProvider::class)->changeUser();
         $this->sendChangePasswordMail($user->getEmail(), $password);
     }
-
 
     private function sendChangePasswordMail(string $email, string $newPassword)
     {
         $mailer = $this->container->get(UsersMailer::class);
         $info = array('password' => $newPassword);
-        $mailer->sendMessage('Password Change Email', 'fea.ortenore@gmail.com',
-            'user/change.html.twig', $info);#$user->getEmail()
+        $mailer->sendMessage('Password Change Email', $email,
+            'user/change.html.twig', $info);
     }
 
-    private function getEmailFromForm(Request $request):string
+    private function getEmailFromForm(Request $request)
     {
         if ( $email = $request->get('email') ) {
             return $email;

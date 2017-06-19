@@ -18,10 +18,9 @@ class ChangeUserController extends Controller
     /**
      * @Route("/change_user", name="change_user")
      */
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
+    public function changeAction(Request $request, AuthenticationUtils $authUtils)
     {
         $form = $this->createChangeForm($request);
-
         if($this->tryChangeUser($form)){
             return $this->redirectToRoute('main');
         }

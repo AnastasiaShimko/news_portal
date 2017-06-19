@@ -58,7 +58,7 @@ class RegistrationController extends Controller
         $info =  array(
             'id' => md5($user->getId().$user->getPassword().$user->getEmail())
         );
-        $mailer->sendMessage('Confirm Registration', 'fea.ortenore@gmail.com',
-            'user/registration.html.twig', $info);#$user->getEmail()
+        $mailer->sendMessage('Confirm Registration', $user->getEmail(),
+            'user/registration.html.twig', $info);
     }
 }

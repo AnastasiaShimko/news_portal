@@ -1,0 +1,10 @@
+<h3>Hy, {{ name }}. Top news </h3>
+
+{% for article in news %}
+    <div class="article">
+        <h3><span>{{ article.category.name }}:</span> {{ article.name }} ({{ article.author}})</h3>
+        <p>{{ article.annotation }}</p>
+        <p>{{ article.date |date('Y-m-d') }}</p>
+        <p><a href="{{ url('article', {'id': article.id}) }}">Article page</a></p>
+    </div>
+{% endfor %}

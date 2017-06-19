@@ -17,9 +17,15 @@ class ChangeOfArticleController extends Controller
     /**
      * @Route("/change_article/{id}", name="change_article")
      */
-    public function registerAction($id, Request $request, EntityManager $em)
+    public function changeAction($id, Request $request, EntityManager $em)
     {
         $form = $this->createChangeForm($request, $em, $id);
+        if(!$form){
+            return $this->render(
+                'error/error.html.twig',
+                array('label'=>"Can't find article with id :".$id)
+            );
+        }
         if ($this->tryChangeArticle($form, $em)) {
             return $this->redirectToRoute('article', array('id'=>$id));
         }
@@ -38,6 +44,12 @@ class ChangeOfArticleController extends Controller
         $similar = $request->request->get('similar');
         $repository = $em->getRepository(Article::class);
         $article = $repository->find($id);
+        if (!$article){
+            return $this->render(
+                'error/error.html.twig',
+                array('label'=>"Can't find article with id :".$id)
+            );
+        }
         if($similar && $article && ($similar = $repository->findOneBy(array('name'=>$similar)))){
             $article->addSimilarArticle($similar);
             $em->flush();
@@ -46,9 +58,12 @@ class ChangeOfArticleController extends Controller
 
     }
 
-    private function createChangeForm(Request $request, EntityManager $em, $id):Form
+    private function createChangeForm(Request $request, EntityManager $em, $id)
     {
         $this->article = $em->getRepository(Article::class)->find($id);
+        if (!$this->article){
+            return null;
+        }
         $form = $this->createForm(ArticleAddChangeForm::class, $this->article);
         $form->handleRequest($request);
         return $form;
