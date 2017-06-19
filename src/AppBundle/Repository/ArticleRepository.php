@@ -3,10 +3,21 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Article;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityRepository;
 
 class ArticleRepository extends EntityRepository
 {
+    public function getTopNews():array
+    {
+        $query = $this->createQueryBuilder('a');
+        $query->where('a.date >= :current');
+        $query->setParameter('current', new \DateTime('-7 day'), Type::DATETIME);
+        $query->orderBy('a.visitorCount', 'DESC');
+        $query->setMaxResults(10);
+        return $query->getQuery()->execute();
+    }
+
     public function addArticle(Article $article)
     {
         $article->setDate(new \DateTime());

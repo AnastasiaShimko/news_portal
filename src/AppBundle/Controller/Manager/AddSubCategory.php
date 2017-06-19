@@ -17,11 +17,17 @@ class AddSubCategory extends Controller
     /**
      * @Route("/new_category/{id}", name="new_category")
      */
-    public function registerAction($id, Request $request, EntityManager $em)
+    public function addAction($id, Request $request, EntityManager $em)
     {
         $form = $this->createAddForm($request, $em, $id);
+        if(!$form){
+            return $this->render(
+                'error/error.html.twig',
+                array('label'=>"Can't find category with id :".$id)
+            );
+        }
         if ($this->tryAddCategory($form, $em)) {
-            return $this->redirect($request->server->get('HTTP_REFERER'));
+            return $this->redirectToRoute('main');
         }
         return $this->render(
             'main/add_category.html.twig',
@@ -31,7 +37,11 @@ class AddSubCategory extends Controller
 
     private function createAddForm(Request $request, EntityManager $em, $id):Form{
         $this->category = new Category();
-        $this->category->setParent($em->getRepository(Category::class)->find($id));
+        $parent = $em->getRepository(Category::class)->find($id);
+        if(!$parent){
+            return null;
+        }
+        $this->category->setParent($parent);
         $form = $this->createForm(CategoryAddForm::class, $this->category);
         $form->handleRequest($request);
         return $form;

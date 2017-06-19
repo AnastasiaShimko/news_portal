@@ -37,6 +37,7 @@ security:
         - { path: ^/validation/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/password_change, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/main, roles: ROLE_USER }
+        - { path: ^/parameter, roles: ROLE_USER }
         - { path: ^/change_user, roles: ROLE_USER }
         - { path: ^/article/, roles: ROLE_USER }
         - { path: ^/show, roles: ROLE_USER }

@@ -79,7 +79,6 @@ class User extends BasicUser implements AdvancedUserInterface, \Serializable
             $this->notification,
             $this->role,
             $this->parameters
-            // $this->salt,
         ));
     }
 
