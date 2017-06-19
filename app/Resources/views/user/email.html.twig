@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
-{% block title %}Password{% endblock %}
+{% block title %}{{ 'password' | trans }}{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
 {% endblock %}
 {% block body %}
 <div>
-    <h1>Send new password</h1>
+    <h1>{{ 'send_new_password' | trans }}</h1>
     <form action="{{ path('password_change') }}" method="post">
         <div>
-            <label for="email">Email</label>
+            <label for="email">{{ 'email' | trans }}</label>
             <input type="text" id="email" name="email"/>
         </div>
         <br>
-        <button type="submit">Send</button>
+        <button type="submit">{{ 'send' | trans }}</button>
         <br>
-        <a href="{{ path('main') }}">Back to main page</a>
+        <a href="{{ path('main') }}">{{ 'back_to_main' | trans }}</a>
     </form>
 </div>
 {% endblock %}

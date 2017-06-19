@@ -1,14 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>You did it! You registered!</h3>
-    <p>Hi! You're successfully registered.<br>
-        To make verification of your email, go to:</p> <a href="{{ url('validation', {'id': id})}}">Verification</a>.
+    <p>{{ 'successful_registration_email' | trans }}</p> <a href="{{ url('validation', {'id': id})}}">{{ 'verification' | trans }}</a>.
     <p>Thanks!</p>
-{% endblock %}
-
-{% block stylesheets %}
-    <style>
-
-    </style>
 {% endblock %}

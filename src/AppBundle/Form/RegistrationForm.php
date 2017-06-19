@@ -16,15 +16,17 @@ class RegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, array(
+                'label' => 'email',
+            ))
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
+                'first_options'  => array('label' => 'password'),
+                'second_options' => array('label' => 'repeat_password'),
             ))
             ->add('notification', CheckboxType::class, array(
                 'required' => false,
-                'label'    => 'Do you want to receive top news every week?',
+                'label'    => 'receive_news_question',
             ));
     }
 

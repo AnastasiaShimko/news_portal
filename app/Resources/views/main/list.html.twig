@@ -6,13 +6,13 @@
 {% block content %}
     {# total items count #}
     <div class="content" id="articles">
-        <h1>Articles</h1>
+        <h1>{{ 'articles' | trans }}</h1>
         {% for article in pagination %}
             <div class="article">
                 <h3><span>{{ article.category.name }}:</span> {{ article.name }} ({{ article.author}})</h3>
                 <p>{{ article.annotation }}</p>
                 <p id="date">{{ article.date |date('Y-m-d') }}</p>
-                <p id="link"><a href="{{ path('article', {'id': article.id}) }}">Article page</a></p>
+                <p id="link"><a href="{{ path('article', {'id': article.id}) }}">{{ 'article_page' | trans }}</a></p>
             </div>
         {% endfor %}
         {# display navigation #}

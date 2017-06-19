@@ -15,13 +15,13 @@
         {% endfor %}
         {% if is_granted('ROLE_MANAGER') %}
             <div id="managerbar">
-                <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('Are you sure?')">Delete</a>
-                <a href="{{ path('change_article', {'id': article.id}) }}">Change article</a>
+                <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('confirm_question')">{{ 'delete' | trans }}</a>
+                <a href="{{ path('change_article', {'id': article.id}) }}">{{ 'change_article' | trans }}</a>
             </div>
             <form action="{{ path('add_similar', {'id': article.id}) }}" method="post">
-                <label for="similar">Enter the name of the similar article.</label>
+                <label for="similar">{{ 'enter_similar_articles' | trans }}</label>
                 <input type="text" id="similar" name="similar" />
-                <button type="submit">add</button>
+                <button type="submit">{{ 'add' | trans }}</button>
             </form>
         {% endif %}
     </div>

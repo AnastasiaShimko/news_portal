@@ -1,12 +1,12 @@
 <ul class="cf">
     <li class="current first">
-        <a href="{{ path('main') }}">Home</a>
+        <a href="{{ path('main') }}">{{ 'home' | trans }}</a>
     </li>
     <li class="current_ancestor">
-        <a href="{{ path('main') }}">Profile</a>
+        <a href="{{ path('main') }}">{{ 'profile' | trans }}</a>
         <ul class="menu_level_1">
             <li class="current first last">
-                <a href="{{ path('change_user') }}">Change user</a>
+                <a href="{{ path('change_user') }}">{{ 'change_user' | trans }}</a>
             </li>
         </ul>
     </li>

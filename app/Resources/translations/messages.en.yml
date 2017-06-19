@@ -28,3 +28,35 @@ annotation: Annotation
 text: Text
 category: Category
 change_article: Change article
+you_logged_in_as: You logged in as
+home: Home
+change_user: Change user
+article_page: Article page
+news_portal: News Portal
+hello: Hello
+change_properties: Change properties
+category_tree: Category tree
+order_by: Order By
+date: Date
+visitors: Visitors
+articles_on_one_list: Articles on one list
+old_password: Old password
+search: Search
+confirm_question: Are you sure?
+delete: Delete
+enter_similar_article: Enter the name of the similar article.
+add: Add
+congratulations_password_changing: You did it! You change your password!
+your_new_password: Your new password is
+have_a_nice_day: Have a nice day!
+go_to_login: Go to login page
+send_new_password: Send new password
+send: Send
+back_to_main: Back to main page
+authorisation: Authorisation
+registration_question: Haven't registered yet?
+to_registration: Go to registration page
+forgot_password_question: Forgot your password?
+send_new_password: Send me new password
+successful_registration_email: You did it! You registered! Hi! You're successfully registered. To make verification of your email, go to:
+verification: Verification

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}News Portal{% endblock %}
+{% block title %}{{ 'news_portal' | trans }}{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
@@ -21,13 +21,13 @@
             {% endblock %}
             {% block content %}
             <div class="content" id="articles">
-                <h3>Hello, {{ app.user.email }}!</h3>
-                <a href="{{ path('change_user') }}">Change properties</a>
+                <h3>{{ 'hello' }}, {{ app.user.email }}!</h3>
+                <a href="{{ path('change_user') }}">{{ 'change_properties' | trans }}</a>
              </div>
             {% endblock %}
             {% block leftsidebar %}
             <div class="content" id="leftsidebar">
-                <p>Smth</p>
+                <p>{{ 'category_tree' | trans }}</p>
                 {% include 'main/category_tree.html.twig' %}
             </div>
             {% endblock %}

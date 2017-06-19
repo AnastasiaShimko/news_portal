@@ -1,15 +1,15 @@
 <div class="parameters">
     <form action="{{ path('parameter') }}" method="post">
         <div>
-        <label for="orderBy">Order By</label>
+        <label for="orderBy">{{ 'order_by' | trans }}</label>
         <select name="orderBy" id="orderBy">
-            <option value="date" {% if app.user.parameters.orderBy == 'date'  %} selected{% endif %}>Date</option>
+            <option value="date" {% if app.user.parameters.orderBy == 'date'  %} selected{% endif %}>{{ 'date' | trans }}</option>
             <option value="visitorCount" {% if app.user.parameters.orderBy == 'visitorCount'  %}
-            selected{% endif %}>Visitors</option>
+            selected{% endif %}>{{ 'visitors' | trans }}</option>
         </select>
         </div>
         <div>
-            <label for="articleCount">Articles on one list</label>
+            <label for="articleCount">{{ 'articles_on_one_list' | trans }}</label>
             <select name="articleCount" id="articleCount" >
                 <option value="5" {% if app.user.parameters.articleCount == 5  %} selected{% endif %}>5</option>
                 <option value="10" {% if app.user.parameters.articleCount == 10  %} selected{% endif %}>10</option>
