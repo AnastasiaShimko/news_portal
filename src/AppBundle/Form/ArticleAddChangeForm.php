@@ -15,11 +15,16 @@ class ArticleAddChangeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('author', TextType::class)
-            ->add('annotation', TextareaType::class)
-            ->add('text', TextareaType::class)
+            ->add('name', TextType::class, array(
+                'label'    => 'name',))
+            ->add('author', TextType::class, array(
+                'label'    => 'author',))
+            ->add('annotation', TextareaType::class, array(
+                'label'    => 'annotation',))
+            ->add('text', TextareaType::class, array(
+                'label'    => 'text',))
             ->add('category', EntityType::class, array(
+                'label'    => 'category',
                 'class' => 'AppBundle:Category',
                 'choice_label' => 'name',
             ));

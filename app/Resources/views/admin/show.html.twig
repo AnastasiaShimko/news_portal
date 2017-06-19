@@ -11,11 +11,11 @@
                     {% for user in users %}
                     <table>
                             <tr>
-                                <td class="first">User ID</td>
+                                <td class="first">{{ 'user_id' | trans }}</td>
                                 <td>{{ user.id }}</td>
                             </tr>
                             <tr>
-                                <td class="first">User email</td>
+                                <td class="first">{{ 'user_email' | trans }}</td>
                                 <td>{{ user.email }}</td>
                             </tr>
                             <tr>
@@ -23,13 +23,13 @@
                                 <td>{{ form_widget(form.roles[user.id]) }}</td>
                             </tr>
                             <tr>
-                                <td class="first">Notification</td>
+                                <td class="first">{{ 'notification' | trans}}</td>
                                 <td>{{ user.notification }}</td>
                             </tr>
                             <td style="border: none;"></td>
                     </table>
                     {% endfor %}
-            <button type="submit">Change</button>
+            <button type="submit">{{ 'change' | trans }}</button>
             {{ form_end(form) }}
             </div>
         </div>

@@ -1,23 +1,23 @@
-form {
+#articles form {
     margin: auto;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 0 2% 0 2%;
 }
-form div {
+#articles form div {
     clear: both;
     text-align: right;
 }
-form label {
+#articles form label {
     float: left;
     margin: 2%;
     font-size:1em;
 }
-form input {
+#articles form input {
     margin: 1%;
     height: 2em;
     width: 45%;
 }
-button {
+#articles button {
     margin-left: 43%;
     -webkit-border-radius: 11px;
     -moz-border-radius: 11px;

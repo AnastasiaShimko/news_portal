@@ -1,11 +1,13 @@
 span{
     color: #F5871F;
 }
-.article{
+.article {
     text-align: left;
     border: solid black 1px;
     margin: 3%;
-    padding-bottom: 5%;
+}
+#articles div{
+    height: 10em;
 }
 h1{
     text-align: center;
@@ -15,7 +17,7 @@ h1{
 }
 #link{
     float: left;
-    width: 15%;
+    width: 20%;
 }
 #date{
     float: right;
@@ -26,4 +28,7 @@ h1{
 a{
     text-decoration: none;
     color: #F5871F;
+}
+.navigation{
+    height: 5em;
 }
