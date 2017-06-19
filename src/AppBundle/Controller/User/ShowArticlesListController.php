@@ -20,7 +20,7 @@ class ShowArticlesListController extends Controller
         $repository = $em->getRepository(Article::class);
         $query = $repository->createQueryBuilder('a');
         $this->orderByParam($query);
-        return $this->renderPaginator($query, $request);
+        return $this->renderPaginator($query, $request, $em);
     }
 
     /**
@@ -34,7 +34,7 @@ class ShowArticlesListController extends Controller
             $query = $repository->createQueryBuilder('a');
             $this->searchByPart($query, $search);
             $this->orderByParam($query);
-            return $this->renderPaginator($query, $request);
+            return $this->renderPaginator($query, $request, $em);
         }
         return $this->redirectToRoute('show_articles');
     }
@@ -57,7 +57,7 @@ class ShowArticlesListController extends Controller
         $query = $repository->createQueryBuilder('a');
         $this->whereCategory($query, $em, $id);
         $this->orderByParam($query);
-        return $this->renderPaginator($query, $request);
+        return $this->renderPaginator($query, $request, $em);
     }
 
     public function whereCategory(QueryBuilder $query, EntityManager $em, $id)
@@ -96,7 +96,7 @@ class ShowArticlesListController extends Controller
         return $categories;
     }
 
-   private function renderPaginator(QueryBuilder $query, Request $request)
+   private function renderPaginator(QueryBuilder $query, Request $request,  EntityManager $em )
    {
        $paginator  = $this->get('knp_paginator');
        $pagination = $paginator->paginate(
@@ -104,7 +104,9 @@ class ShowArticlesListController extends Controller
            $request->query->getInt('page', 1),
            $this->getUser()->getParameters()->getArticleCount()
        );
-       return $this->render('main/list.html.twig', array('pagination' => $pagination));
+       return $this->render('main/list.html.twig', array('pagination' => $pagination,
+           'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
+           ));
    }
 
 }

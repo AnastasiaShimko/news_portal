@@ -26,8 +26,10 @@ class DeleteCategoryController extends Controller
         }
         return $this->render(
             'error/error.html.twig',
-            array('label'=>"Can't find category with id ".$id)
-        );
+            array(
+                'label'=>"cant_find_category".$id,
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
+                ));
     }
 
     private function deleteCategory($id, EntityManager $em):bool

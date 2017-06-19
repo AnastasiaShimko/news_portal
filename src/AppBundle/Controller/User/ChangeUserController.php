@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller\User;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\ChangedUser;
 use AppBundle\Form\ChangeUserForm;
 use AppBundle\Provider\UserProvider;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -18,14 +20,15 @@ class ChangeUserController extends Controller
     /**
      * @Route("/change_user", name="change_user")
      */
-    public function changeAction(Request $request, AuthenticationUtils $authUtils)
+    public function changeAction(Request $request, AuthenticationUtils $authUtils, EntityManager $em)
     {
         $form = $this->createChangeForm($request);
         if($this->tryChangeUser($form)){
             return $this->redirectToRoute('main');
         }
         return $this->render('main/change_user.html.twig', array(
-            'form' => $form->createView()
+                'form' => $form->createView(),
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
             )
         );
     }

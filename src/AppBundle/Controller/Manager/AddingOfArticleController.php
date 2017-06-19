@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Manager;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Category;
 use AppBundle\Form\ArticleAddChangeForm;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,7 +26,8 @@ class AddingOfArticleController extends Controller
         }
         return $this->render(
             'main/add.html.twig',
-            array('form' => $form->createView())
+            array('form' => $form->createView(),
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot())
         );
     }
 

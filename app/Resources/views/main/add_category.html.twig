@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
     <div class="content" id="articles">
-        <h3>{{ parent }}</h3>
+        <h3>{{ 'parent_name' | trans }}: {{ parent }}</h3>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <button type="submit">Add</button>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Roles;
 use AppBundle\Form\UserChangeByAdminForm;
 use AppBundle\Provider\UserProvider;
@@ -28,7 +29,8 @@ class UserAccountController extends Controller
             $form = $this->createUserChangeForm($users, $request);
         }return $this->render(
             'admin/show.html.twig',
-            array('users' => $users, 'form' => $form->createView())
+            array('users' => $users, 'form' => $form->createView(),
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot())
         );
     }
 

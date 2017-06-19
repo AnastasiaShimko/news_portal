@@ -1,0 +1,17 @@
+{% macro menu_links(links) %}
+    {% import _self as macros %}
+    <li>
+        <a>{{ links.name }}</a>
+        {% if links.childslist %}
+            {% for link in links.childslist %}
+                 <ul>
+                     {{ macros.menu_links(link) }}
+                 </ul>
+            {% endfor %}
+        {% endif %}
+    </li>
+{% endmacro %}
+{% import _self as macros %}
+<ul class="main-menu">
+    {{ macros.menu_links(category_root) }}
+</ul>

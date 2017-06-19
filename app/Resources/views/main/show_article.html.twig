@@ -10,19 +10,22 @@
         <br>
         <div id="fulltext">{{ article.fullText.fullText }}</div>
         <p id="date">{{ article.date|date('Y-m-d') }}</p>
+        <div class="similar">
+            <p>{{ 'similar_articles' | trans }}</p>
         {% for art in article.similarArticles %}
-            {{ art.name }}<br>
+            <a href="{{ path('article', {'id': art.id}) }}">{{ art.name }}</a>
         {% endfor %}
+        </div>
         {% if is_granted('ROLE_MANAGER') %}
             <div id="managerbar">
-                <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('confirm_question')">{{ 'delete' | trans }}</a>
+                <a href="{{ url('delete_article', {'id': article.id})}}" onclick="return confirm('{{ 'confirm_question' | trans }}')">{{ 'delete' | trans }}</a>
                 <a href="{{ path('change_article', {'id': article.id}) }}">{{ 'change_article' | trans }}</a>
-            </div>
             <form action="{{ path('add_similar', {'id': article.id}) }}" method="post">
                 <label for="similar">{{ 'enter_similar_articles' | trans }}</label>
                 <input type="text" id="similar" name="similar" />
                 <button type="submit">{{ 'add' | trans }}</button>
             </form>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

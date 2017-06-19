@@ -22,7 +22,8 @@ class TreeTestController extends Controller
     public function controlAction(EntityManager $em){
         return $this->render(
             'main/category_tree.html.twig',
-            array('category_root'=>$em->getRepository(Category::class)->getCategoryRoot())
+            array(
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot())
         );
     }
 }

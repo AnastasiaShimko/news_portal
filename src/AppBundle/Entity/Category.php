@@ -103,4 +103,12 @@ class Category
     {
         return $this->articles;
     }
+
+    public function getChildsList()
+    {
+        if ( $this->childs->count()>0) {
+            return $this->childs->getValues();
+        }
+        return null;
+    }
 }

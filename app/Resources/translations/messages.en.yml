@@ -44,7 +44,7 @@ old_password: Old password
 search: Search
 confirm_question: Are you sure?
 delete: Delete
-enter_similar_article: Enter the name of the similar article.
+enter_similar_articles: Enter the name of the similar article.
 add: Add
 congratulations_password_changing: You did it! You change your password!
 your_new_password: Your new password is
@@ -60,3 +60,7 @@ forgot_password_question: Forgot your password?
 send_new_password: Send me new password
 successful_registration_email: You did it! You registered! Hi! You're successfully registered. To make verification of your email, go to:
 verification: Verification
+parent_name: Parent category name
+cant_find_article: Can't find article with id
+cant_find_category: Can't find category with id
+similar_articles: Similar Articles

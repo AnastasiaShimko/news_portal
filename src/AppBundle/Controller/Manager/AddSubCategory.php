@@ -31,11 +31,14 @@ class AddSubCategory extends Controller
         }
         return $this->render(
             'main/add_category.html.twig',
-            array('parent'=>$this->category->getParent()->getName(),'form' => $form->createView())
-        );
+            array('parent'=>$this->category->getParent()->getName(),
+                'form' => $form->createView(),
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot()
+            ));
     }
 
-    private function createAddForm(Request $request, EntityManager $em, $id):Form{
+    private function createAddForm(Request $request, EntityManager $em, $id)
+    {
         $this->category = new Category();
         $parent = $em->getRepository(Category::class)->find($id);
         if(!$parent){

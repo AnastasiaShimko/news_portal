@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Manager;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Category;
 use AppBundle\Form\ArticleAddChangeForm;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,16 +24,19 @@ class ChangeOfArticleController extends Controller
         if(!$form){
             return $this->render(
                 'error/error.html.twig',
-                array('label'=>"Can't find article with id :".$id)
-            );
+                array(
+                    'label'=>"Can't find article with id :".$id,
+                    'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
+                    ));
         }
         if ($this->tryChangeArticle($form, $em)) {
             return $this->redirectToRoute('article', array('id'=>$id));
         }
         return $this->render(
             'main/change.html.twig',
-            array('form' => $form->createView())
-        );
+            array('form' => $form->createView(),
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
+            ));
 
     }
 
@@ -47,8 +51,9 @@ class ChangeOfArticleController extends Controller
         if (!$article){
             return $this->render(
                 'error/error.html.twig',
-                array('label'=>"Can't find article with id :".$id)
-            );
+                array('label'=>"cant_find_article".$id,
+                'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
+                ));
         }
         if($similar && $article && ($similar = $repository->findOneBy(array('name'=>$similar)))){
             $article->addSimilarArticle($similar);
@@ -57,7 +62,6 @@ class ChangeOfArticleController extends Controller
         return $this->redirectToRoute('article', array('id'=>$id));
 
     }
-
     private function createChangeForm(Request $request, EntityManager $em, $id)
     {
         $this->article = $em->getRepository(Article::class)->find($id);
