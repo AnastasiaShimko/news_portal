@@ -1,17 +1,31 @@
+{% block additionalcss %}
+    <link rel="stylesheet" href="{{ asset('css/category_tree.css') }}" />
+{% endblock %}
+<script>
+    function visibility()
+    {
+        document.getElementsByClassName('main-menu').children.style.visibility='visible';
+    }
+</script>
 {% macro menu_links(links) %}
     {% import _self as macros %}
     <li>
-        <a>{{ links.name }}</a>
-        {% if links.childslist %}
+        <a href="{{ url('category_articles', {'id': links.id})}}">{{ links.name }}</a>
+        <ul class="categories">
+            <li class="subcategory" style="margin-left: 20%;" ><a style="background-color: rgba(220,102,102,0.6);" href="{{ url('new_category', {'id': links.id})}}">{{ 'new_category' | trans }}</a></li>
+            <li class="subcategory" style="margin-left: 20%;" ><a style="background-color: rgba(220,102,102,0.6);" href="{{ url('delete_category', {'id': links.id})}}">{{ 'delete_category' | trans }}</a></li>
+
+            {% if links.childslist %}
             {% for link in links.childslist %}
-                 <ul>
                      {{ macros.menu_links(link) }}
-                 </ul>
             {% endfor %}
         {% endif %}
+        </ul>
     </li>
 {% endmacro %}
 {% import _self as macros %}
-<ul class="main-menu">
+<div class="tree">
+<ul class="main-menu"  onclick="visibility()">
     {{ macros.menu_links(category_root) }}
 </ul>
+</div>

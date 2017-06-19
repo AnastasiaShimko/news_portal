@@ -27,7 +27,7 @@ class DeleteCategoryController extends Controller
         return $this->render(
             'error/error.html.twig',
             array(
-                'label'=>"cant_find_category".$id,
+                'label'=>"cant_find_category",
                 'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
                 ));
     }

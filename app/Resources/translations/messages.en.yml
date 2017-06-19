@@ -64,3 +64,7 @@ parent_name: Parent category name
 cant_find_article: Can't find article with id
 cant_find_category: Can't find category with id
 similar_articles: Similar Articles
+new_category: New  subcategory
+delete_category: Delete category
+cant_find_category: Can't find category
+cant_find_article: Can't find article

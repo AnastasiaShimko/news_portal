@@ -19,7 +19,7 @@ class ArticleShowController extends Controller
         if(!$article){
             return $this->render(
                 'error/error.html.twig',
-                array('label'=>"Can't find article with id :".$id,
+                array('label'=>"cant_find_article",
                     'category_root'=>$em->getRepository(Category::class)->getCategoryRoot(),
                 ));
         }
