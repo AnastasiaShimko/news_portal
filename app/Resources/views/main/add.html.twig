@@ -4,10 +4,10 @@
 {% endblock %}
 {% block content %}
     <div class="content" id="articles">
-        <h3>Add new article</h3>
+        <h3>{{ 'add_article' | trans }}</h3>
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit">Add new article</button>
+        <button type="submit">{{ 'add_article' | trans }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

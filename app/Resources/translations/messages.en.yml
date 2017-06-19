@@ -7,6 +7,7 @@ repeat_password: Repeat password
 receive_news_question: Do you want to receive top news every week?
 already_registered: Already registered?
 login: Login
+log_out: Log out
 users: Users
 profile: Profile
 articles: Articles
@@ -16,3 +17,14 @@ user: User
 manager: Manager
 delete_account: Delete account
 user_role: User Role
+notification: Notification
+change: Change
+user_id: User ID
+user_email: User email
+add_article: Add new article
+name: Name
+author: Author
+annotation: Annotation
+text: Text
+category: Category
+change_article: Change article
