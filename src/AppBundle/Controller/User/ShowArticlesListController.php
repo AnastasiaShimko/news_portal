@@ -28,7 +28,7 @@ class ShowArticlesListController extends Controller
      */
     public function findAction(EntityManager $em, Request $request)
     {
-        $search = $request->request->get("find");
+        $search = $request->query->get("find");
         if($search) {
             $repository = $em->getRepository(Article::class);
             $query = $repository->createQueryBuilder('a');
